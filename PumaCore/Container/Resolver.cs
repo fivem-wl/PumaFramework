@@ -17,7 +17,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using static PumaFramework.Core.Container.CompoundKeyUtils;
@@ -82,10 +81,10 @@ public class Resolver : IResolver
 
 	public void RegisterReferenceRaw(object obj, object key = null, params Type[] types)
 	{
-		Trace.Assert(types.Length > 0);
+		//Trace.Assert(types.Length > 0);
 		foreach (var type in types)
 		{
-			Trace.Assert(type.IsInstanceOfType(obj));
+			//Trace.Assert(type.IsInstanceOfType(obj));
 			_refs[CompoundKey(type, key)] = obj;
 		}
 	}
