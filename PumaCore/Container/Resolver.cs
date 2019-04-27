@@ -29,7 +29,7 @@ public class Resolver : IResolver
 {
 	public IResolver Parent { get; }
 	
-	private readonly IDictionary<object, object> _refs = new Dictionary<object, object>();
+	readonly IDictionary<object, object> _refs = new Dictionary<object, object>();
 
 	
 	public Resolver(IResolver parent = null)
@@ -49,7 +49,7 @@ public class Resolver : IResolver
 		}
 
 		IDictionary<Component, bool> initializingComponents = new Dictionary<Component, bool>();
-		bool initDeps(Component component)
+		bool InitDeps(Component component)
 		{
 			if (!initializingComponents.TryGetValue(component, out var inited))
 			{
@@ -59,7 +59,7 @@ public class Resolver : IResolver
 					.All(dep =>
 					{
 						var depComponent = container.GetComponent(dep.GetType()) as Component;
-						return initDeps(depComponent);
+						return InitDeps(depComponent);
 					})
 				) return false;
 			}
@@ -72,7 +72,7 @@ public class Resolver : IResolver
 
 		if (!container._components
 				.Where(e => ((e.Key as Type) == e.Value.GetType()))
-				.All(e => initDeps(e.Value as Component))
+				.All(e => InitDeps(e.Value as Component))
 		) return null;
 		
 		container.Init();

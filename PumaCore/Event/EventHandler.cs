@@ -34,13 +34,13 @@ public class EventHandler : IComparable<EventHandler>
 	}
 
 
-	private static long _count = 0;
+	static long _count = 0;
 
 
-	private readonly long _id;
+	readonly long _id;
 	internal readonly Priority _priority;
 	internal readonly Type _eventType;
-	private readonly Action<Event> _handler;
+	readonly Action<Event> _handler;
 
 
 	public EventHandler(Type eventType, Priority priority, Action<Event> handler)

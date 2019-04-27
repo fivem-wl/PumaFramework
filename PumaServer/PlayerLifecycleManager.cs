@@ -25,8 +25,8 @@ namespace PumaFramework.Server {
 
 public class PlayerLifecycleManager : Component
 {
-	private readonly ISet<Type> _componentTypes = new HashSet<Type>();
-	private readonly IList<(string, Delegate)> _eventHandlers = new List<(string, Delegate)>();
+	readonly ISet<Type> _componentTypes = new HashSet<Type>();
+	readonly IList<(string, Delegate)> _eventHandlers = new List<(string, Delegate)>();
 	
 	
 	public override void Init()
@@ -39,7 +39,7 @@ public class PlayerLifecycleManager : Component
 			_eventHandlers.Add(new ValueTuple<string, Delegate>(@event, handler));
 		}
 		
-		AddEventHandler("playerConnecting", new Action<Player, string, dynamic, dynamic>(OnPlayerConnecting));
+		AddEventHandler("playerJoining", new Action<Player>(OnPlayerJoining));
 		AddEventHandler("playerDropped", new Action<Player, string>(OnPlayerDropped));
 
 		foreach (PlayerLifecycleComponentAttribute attr in Owner.GetType().GetCustomAttributes(typeof(PlayerLifecycleComponentAttribute)))
@@ -59,7 +59,7 @@ public class PlayerLifecycleManager : Component
 		}
 	}
 
-	private void OnPlayerConnecting([FromSource] Player player, string playerName, dynamic setKickReason, dynamic deferrals)
+	void OnPlayerJoining([FromSource] Player player)
 	{
 		foreach (var type in _componentTypes)
 		{
@@ -67,7 +67,7 @@ public class PlayerLifecycleManager : Component
 		}
 	}
 	
-	private void OnPlayerDropped([FromSource] Player player, string reason)
+	void OnPlayerDropped([FromSource] Player player, string reason)
 	{
 		foreach (var type in _componentTypes)
 		{

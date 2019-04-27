@@ -15,6 +15,7 @@
  * along with PumaFramework.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+using CitizenFX.Core;
 using PumaFramework.Core.Container;
 using PumaFramework.Shared;
 
@@ -33,11 +34,11 @@ public class ServerScript : PumaScript
 	protected override void OnStart()
 	{
 		Service = RootResolver.ConstructContainer<ServerService>();
+		Debug.WriteLine("ServerScript loaded.");
 	}
 	
 	protected override void OnStop()
 	{
-	
 	}
 }
 

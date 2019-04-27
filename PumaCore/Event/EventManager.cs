@@ -33,7 +33,7 @@ public class EventManager
 		
 	}
 
-	private EventHandler RegisterEventHandler(Type eventType, EventHandler.Priority priority, Action<Event> callback)
+	EventHandler RegisterEventHandler(Type eventType, EventHandler.Priority priority, Action<Event> callback)
 	{
 		if (!_eventHandlers.TryGetValue(eventType, out var handlers))
 		{
@@ -64,7 +64,7 @@ public class EventManager
 		return true;
 	}
 
-	private bool UnregisterEventHandler(EventHandler handler)
+	bool UnregisterEventHandler(EventHandler handler)
 	{
 		if (!_eventHandlers.TryGetValue(handler._eventType, out var set)) return false;
 		return set.Remove(handler);

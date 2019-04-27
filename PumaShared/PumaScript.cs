@@ -29,7 +29,7 @@ public abstract class PumaScript : BaseScript
 	
 	public readonly Resolver RootResolver = new Resolver();
 	
-	private readonly IList<(string, Delegate)> _eventHandlers = new List<(string, Delegate)>();
+	readonly IList<(string, Delegate)> _eventHandlers = new List<(string, Delegate)>();
 
 
 	protected PumaScript()
@@ -52,13 +52,13 @@ public abstract class PumaScript : BaseScript
 		#endif
 	}
 	
-	private void OnResourceStart(string resourceName)
+	void OnResourceStart(string resourceName)
 	{
 		if (GetCurrentResourceName() != resourceName) return;
 		OnStart();
 	}
 	
-	private void OnResourceStop(string resourceName)
+	void OnResourceStop(string resourceName)
 	{
 		if (GetCurrentResourceName() != resourceName) return;
 		OnStop();

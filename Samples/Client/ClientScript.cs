@@ -16,8 +16,6 @@
  */
 
 using System;
-using CitizenFX.Core;
-using PumaFramework.Core.Container;
 using PumaFramework.Shared;
 
 namespace Client {
