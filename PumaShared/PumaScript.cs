@@ -28,27 +28,19 @@ public abstract class PumaScript : BaseScript
 	public new PlayerList Players => base.Players;
 	
 	public readonly Resolver RootResolver = new Resolver();
-	
-	readonly IList<(string, Delegate)> _eventHandlers = new List<(string, Delegate)>();
 
 
 	protected PumaScript()
 	{
 		RootResolver.RegisterReference<PumaScript>(this);
 		RootResolver.RegisterReference<EventHandlerDictionary>(EventHandlers);
-		
-		void AddEventHandler(string @event, Delegate handler)
-		{
-			EventHandlers[@event] += handler;
-			_eventHandlers.Add(new ValueTuple<string, Delegate>(@event, handler));
-		}
 
 		#if SERVER
-			AddEventHandler("onResourceStart", new Action<string>(OnResourceStart));
-			AddEventHandler("onResourceStop", new Action<string>(OnResourceStop));
+			EventHandlers["onResourceStart"] += new Action<string>(OnResourceStart);
+			EventHandlers["onResourceStop"] += new Action<string>(OnResourceStop);
 		#elif CLIENT
-			AddEventHandler("onClientResourceStart", new Action<string>(OnResourceStart));
-			AddEventHandler("onClientResourceStop", new Action<string>(OnResourceStop));
+			EventHandlers["onClientResourceStart"] += new Action<string>(OnResourceStart);
+			EventHandlers["onClientResourceStop"] += new Action<string>(OnResourceStop);
 		#endif
 	}
 	
@@ -65,6 +57,7 @@ public abstract class PumaScript : BaseScript
 	}
 
 	protected abstract void OnStart();
+	
 	protected abstract void OnStop();
 }
 
