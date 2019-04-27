@@ -52,10 +52,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Event\PlayerConnectingEvent.cs" />
+    <Compile Include="Event\PlayerDroppedEvent.cs" />
+    <Compile Include="Event\PlayerEvent.cs" />
+    <Compile Include="Event\PlayerJoiningEvent.cs" />
     <Compile Include="PlayerLifecycleComponent.cs" />
     <Compile Include="PlayerLifecycleComponentAttribute.cs" />
     <Compile Include="PlayerLifecycleManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ServerEventDispatcher.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -15,11 +15,16 @@
  * along with PumaFramework.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-using System;
-using System.Collections.Generic;
 using CitizenFX.Core;
 using PumaFramework.Core.Container;
-using static CitizenFX.Core.Native.API;
+using PumaFramework.Core.Event;
+using PumaFramework.Shared.Event;
+
+#if SERVER
+using PumaFramework.Server;
+#elif CLIENT
+using PumaFramework.Client;
+#endif
 
 namespace PumaFramework.Shared {
 
@@ -28,6 +33,8 @@ public abstract class PumaScript : BaseScript
 	public new PlayerList Players => base.Players;
 	
 	public readonly Resolver RootResolver = new Resolver();
+	
+	public readonly EventManager EventManager = new EventManager();
 
 
 	protected PumaScript()
@@ -36,24 +43,24 @@ public abstract class PumaScript : BaseScript
 		RootResolver.RegisterReference<EventHandlerDictionary>(EventHandlers);
 
 		#if SERVER
-			EventHandlers["onResourceStart"] += new Action<string>(OnResourceStart);
-			EventHandlers["onResourceStop"] += new Action<string>(OnResourceStop);
+			EventDispatcherUtils.RegisterEventHandlers(EventHandlers, new ServerEventDispatcher(EventManager));
 		#elif CLIENT
-			EventHandlers["onClientResourceStart"] += new Action<string>(OnResourceStart);
-			EventHandlers["onClientResourceStop"] += new Action<string>(OnResourceStop);
+			EventDispatcherUtils.RegisterEventHandlers(EventHandlers, new ClientEventDispatcher(EventManager));
 		#endif
+
+		EventManager.RegisterEventHandlers(this);
 	}
 	
-	void OnResourceStart(string resourceName)
+	[PumaEventHandler(HandlerPriority.Monitor)]
+	void OnResourceStart(ResourceStartEvent @event)
 	{
-		if (GetCurrentResourceName() != resourceName) return;
-		OnStart();
+		if (@event.IsCurrentResource) OnStart();
 	}
 	
-	void OnResourceStop(string resourceName)
+	[PumaEventHandler(HandlerPriority.Bottom)]
+	void OnResourceStop(ResourceStopEvent @event)
 	{
-		if (GetCurrentResourceName() != resourceName) return;
-		OnStop();
+		if (@event.IsCurrentResource) OnStop();
 	}
 
 	protected abstract void OnStart();

@@ -20,28 +20,17 @@ using System.Collections.Generic;
 using System.Reflection;
 using CitizenFX.Core;
 using PumaFramework.Core.Container;
+using PumaFramework.Core.Event;
 
 namespace PumaFramework.Server {
 
 public class PlayerLifecycleManager : Component
 {
 	readonly ISet<Type> _componentTypes = new HashSet<Type>();
-	readonly IList<(string, Delegate)> _eventHandlers = new List<(string, Delegate)>();
 	
 	
 	public override void Init()
 	{
-		var eventHandlers = this.ResolveReference<EventHandlerDictionary>();
-
-		void AddEventHandler(string @event, Delegate handler)
-		{
-			eventHandlers[@event] += handler;
-			_eventHandlers.Add(new ValueTuple<string, Delegate>(@event, handler));
-		}
-		
-		AddEventHandler("playerJoining", new Action<Player>(OnPlayerJoining));
-		AddEventHandler("playerDropped", new Action<Player, string>(OnPlayerDropped));
-
 		foreach (PlayerLifecycleComponentAttribute attr in Owner.GetType().GetCustomAttributes(typeof(PlayerLifecycleComponentAttribute)))
 		{
 			_componentTypes.Add(attr.Type);
@@ -50,16 +39,14 @@ public class PlayerLifecycleManager : Component
 
 	public override void Destroy()
 	{
-		var eventHandlers = this.ResolveReference<EventHandlerDictionary>();
-		foreach (var (@event, @delegate) in _eventHandlers) eventHandlers[@event] -= @delegate;
-		
 		foreach (var type in _componentTypes)
 		{
 			Owner.RemoveComponents(type);
 		}
 	}
-
-	void OnPlayerJoining([FromSource] Player player)
+	
+	[PumaEventHandler(HandlerPriority.Monitor)]
+	void OnPlayerJoining(Player player)
 	{
 		foreach (var type in _componentTypes)
 		{
@@ -67,7 +54,8 @@ public class PlayerLifecycleManager : Component
 		}
 	}
 	
-	void OnPlayerDropped([FromSource] Player player, string reason)
+	[PumaEventHandler(HandlerPriority.Bottom)]
+	void OnPlayerDropped(Player player, string reason)
 	{
 		foreach (var type in _componentTypes)
 		{
