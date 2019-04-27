@@ -53,6 +53,11 @@
     <Compile Include="Container\IContainer.cs" />
     <Compile Include="Container\IResolver.cs" />
     <Compile Include="Container\Resolver.cs" />
+    <Compile Include="Event\Event.cs" />
+    <Compile Include="Event\EventHandler.cs" />
+    <Compile Include="Event\EventHandlerAttribute.cs" />
+    <Compile Include="Event\EventManager.cs" />
+    <Compile Include="Event\IInterruptable.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
