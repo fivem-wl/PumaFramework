@@ -33,7 +33,7 @@ public class EventManager
 		
 	}
 
-	EventHandler RegisterEventHandler(Type eventType, EventHandler.Priority priority, Action<Event> callback)
+	EventHandler RegisterEventHandler(Type eventType, HandlerPriority priority, Action<Event> callback)
 	{
 		if (!_eventHandlers.TryGetValue(eventType, out var handlers))
 		{
@@ -51,12 +51,12 @@ public class EventManager
 		if (_objectEventHandlers.ContainsKey(obj)) return false;
 
 		var handlers = obj.GetType().GetMethods(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)
-			.Where(method => method.GetCustomAttribute<EventHandlerAttribute>() != null)
+			.Where(method => method.GetCustomAttribute<PumaEventHandlerAttribute>() != null)
 			.Where(method => method.GetParameters().Length == 1)
 			.Where(method => method.GetParameters()[0].GetType().IsSubclassOf(typeof(Event)))
 			.Select(method => RegisterEventHandler(
 				method.GetParameters()[0].GetType(),
-				method.GetCustomAttribute<EventHandlerAttribute>().Priority,
+				method.GetCustomAttribute<PumaEventHandlerAttribute>().Priority,
 				@event => method.Invoke(obj, new[] {@event})
 			));
 		
@@ -66,7 +66,7 @@ public class EventManager
 
 	bool UnregisterEventHandler(EventHandler handler)
 	{
-		if (!_eventHandlers.TryGetValue(handler._eventType, out var set)) return false;
+		if (!_eventHandlers.TryGetValue(handler.EventType, out var set)) return false;
 		return set.Remove(handler);
 	}
 

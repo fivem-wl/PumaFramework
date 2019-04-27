@@ -20,46 +20,34 @@ using System.Threading;
 
 namespace PumaFramework.Core.Event {
 
-public class EventHandler : IComparable<EventHandler>
+class EventHandler : IComparable<EventHandler>
 {
-	public enum Priority
-	{
-		Bottom,
-		Lowest,
-		Low,
-		Normal,
-		High,
-		Highest,
-		Monitor,
-	}
-
-
 	static long _count = 0;
 
 
-	readonly long _id;
-	internal readonly Priority _priority;
-	internal readonly Type _eventType;
-	readonly Action<Event> _handler;
+	internal readonly long Id;
+	internal readonly HandlerPriority Priority;
+	internal readonly Type EventType;
+	internal readonly Action<Event> Handler;
 
 
-	public EventHandler(Type eventType, Priority priority, Action<Event> handler)
+	public EventHandler(Type eventType, HandlerPriority priority, Action<Event> handler)
 	{
-		_id = Interlocked.Increment(ref _count);
-		_priority = priority;
-		_eventType = eventType;
-		_handler = handler;
+		Id = Interlocked.Increment(ref _count);
+		Priority = priority;
+		EventType = eventType;
+		Handler = handler;
 	}
 
 	public int CompareTo(EventHandler other)
 	{
-		if (_priority == other._priority) return (_id < other._id) ? -1 : 1;
-		return (_priority > other._priority) ? -1 : 1;
+		if (Priority == other.Priority) return (Id < other.Id) ? -1 : 1;
+		return (Priority > other.Priority) ? -1 : 1;
 	}
 
 	public void Handle(Event @event)
 	{
-		_handler(@event);
+		Handler(@event);
 	}
 }
 

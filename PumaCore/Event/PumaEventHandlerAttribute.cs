@@ -19,12 +19,17 @@ using System;
 
 namespace PumaFramework.Core.Event {
 
-public class EventHandlerAttribute : Attribute
+public class PumaEventHandlerAttribute : Attribute
 {
-	public readonly EventHandler.Priority Priority;
+	public readonly HandlerPriority Priority;
 
 
-	public EventHandlerAttribute(EventHandler.Priority priority)
+	public PumaEventHandlerAttribute()
+	{
+		Priority = HandlerPriority.Normal;
+	}
+	
+	public PumaEventHandlerAttribute(HandlerPriority priority)
 	{
 		Priority = priority;
 	}
