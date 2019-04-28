@@ -24,7 +24,7 @@ using CitizenFX.Core;
 
 namespace PumaFramework.Shared {
 
-public static class EventDispatcherUtils
+public static class EventHandlerUtils
 {
 	public static IEnumerable<Delegate> RegisterEventHandlers(EventHandlerDictionary handlerDictionary, object obj)
 	{

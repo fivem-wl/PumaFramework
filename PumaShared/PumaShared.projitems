@@ -9,7 +9,7 @@
     <Import_RootNamespace>PumaShared</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="$(MSBuildThisFileDirectory)EventDispatcherUtils.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)EventHandlerUtils.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Event\ResourceEvent.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Event\ResourceStartEvent.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Event\ResourceStopEvent.cs" />
