@@ -71,8 +71,8 @@ public class Resolver : IResolver
 		}
 
 		if (!container._components
-				.Where(e => ((e.Key as Type) == e.Value.GetType()))
-				.All(e => InitDeps(e.Value as Component))
+			.Where(e => ((e.Key as Type) == e.Value.GetType()))
+			.All(e => InitDeps(e.Value as Component))
 		) return null;
 		
 		container.Init();
