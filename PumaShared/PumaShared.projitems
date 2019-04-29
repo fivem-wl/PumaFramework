@@ -13,6 +13,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Event\ResourceEvent.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Event\ResourceStartEvent.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Event\ResourceStopEvent.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)PumaContainer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)PumaScript.cs" />
   </ItemGroup>
 </Project>

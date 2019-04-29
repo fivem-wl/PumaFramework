@@ -17,12 +17,13 @@
 
 using PumaFramework.Core.Container;
 using PumaFramework.Server;
+using PumaFramework.Shared;
 
 namespace Server {
 
 [Bind(typeof(PlayerLifecycleManager))]
 [PlayerLifecycleComponent(typeof(PlayerComponent))]
-public class ServerService : Container
+public class ServerService : PumaContainer
 {
 	
 }

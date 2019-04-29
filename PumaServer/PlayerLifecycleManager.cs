@@ -18,9 +18,9 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
-using CitizenFX.Core;
 using PumaFramework.Core.Container;
 using PumaFramework.Core.Event;
+using PumaFramework.Server.Event;
 
 namespace PumaFramework.Server {
 
@@ -46,20 +46,20 @@ public class PlayerLifecycleManager : Component
 	}
 	
 	[PumaEventHandler(HandlerPriority.Monitor)]
-	void OnPlayerJoining(Player player)
+	void OnPlayerJoining(PlayerJoiningEvent @event)
 	{
 		foreach (var type in _componentTypes)
 		{
-			Owner.AddComponent(type, player);
+			Owner.AddComponent(type, @event.Player);
 		}
 	}
 	
 	[PumaEventHandler(HandlerPriority.Bottom)]
-	void OnPlayerDropped(Player player, string reason)
+	void OnPlayerDropped(PlayerDroppedEvent @event)
 	{
 		foreach (var type in _componentTypes)
 		{
-			Owner.RemoveComponent(type, player);
+			Owner.RemoveComponent(type, @event.Player);
 		}
 	}
 }
