@@ -41,7 +41,12 @@ public abstract class Container : IContainer
 			.ToList();
 	}
 
-	public IComponent AddComponent(Type type, object key = null, IEnumerable<Type> bindTo = null)
+	protected ISet<IComponent> GetComponents()
+	{
+		return new HashSet<IComponent>(_components.Values);
+	}
+
+	public virtual IComponent AddComponent(Type type, object key = null, IEnumerable<Type> bindTo = null)
 	{
 		var component = NewComponent(type, key);
 		if (bindTo != null) BindComponents(type, bindTo);
@@ -65,7 +70,7 @@ public abstract class Container : IContainer
 		foreach (var toType in toTypes) _components.Add(CompoundKey(toType), impl);
 	}
 
-	public bool RemoveComponent(Type type, object key = null)
+	public virtual bool RemoveComponent(Type type, object key = null)
 	{
 		var compoundKey = CompoundKey(type, key);
 		if (!_components.TryGetValue(compoundKey, out var component)) return false;
@@ -84,9 +89,9 @@ public abstract class Container : IContainer
 		return components.Count;
 	}
 
-	public void Init() {}
+	public virtual void Init() {}
 
-	public void Destroy() {}
+	public virtual void Destroy() {}
 }
 
 }
