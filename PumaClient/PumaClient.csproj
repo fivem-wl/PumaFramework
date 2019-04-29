@@ -52,7 +52,17 @@
   <ItemGroup>
     <Compile Include="ClientEventDispatcher.cs" />
     <Compile Include="Event\GameEvent.cs" />
+    <Compile Include="Event\NetworkAttemptHostMigrationEvent.cs" />
     <Compile Include="Event\NetworkEntityDamageEvent.cs" />
+    <Compile Include="Event\NetworkHostMigrationEvent.cs" />
+    <Compile Include="Event\NetworkHostSessionEvent.cs" />
+    <Compile Include="Event\NetworkPlayerJoinScriptEvent.cs" />
+    <Compile Include="Event\NetworkPlayerLeftScriptEvent.cs" />
+    <Compile Include="Event\NetworkPlayerSpawnEvent.cs" />
+    <Compile Include="Event\NetworkSignInStateChangedEvent.cs" />
+    <Compile Include="Event\NetworkStartMatchEvent.cs" />
+    <Compile Include="Event\NetworkStartSessionEvent.cs" />
+    <Compile Include="Event\NetworkVehicleUndrivableEvent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -60,6 +60,53 @@ class ClientEventDispatcher
 				(int) args[10]
 			)
 		},
+
+		{
+			"NetworkHostSessionEvent",
+			args => new NetworkHostSessionEvent()
+		},
+		{
+			"NetworkStartSessionEvent",
+			args => new NetworkStartSessionEvent()
+		},
+
+		{
+			"NetworkStartMatchEvent",
+			args => new NetworkStartMatchEvent()
+		},
+
+		{
+			"NetworkPlayerJoinScriptEvent",
+			args => new NetworkPlayerJoinScriptEvent()
+		},
+		{
+			"NetworkPlayerLeftScriptEvent",
+			args => new NetworkPlayerLeftScriptEvent()
+		},
+
+		{
+			"NetworkPlayerSpawnEvent",
+			args => new NetworkPlayerSpawnEvent()
+		},
+
+		{
+			"NetworkAttemptHostMigrationEvent",
+			args => new NetworkAttemptHostMigrationEvent()
+		},
+		{
+			"NetworkHostMigrationEvent",
+			args => new NetworkHostMigrationEvent()
+		},
+
+		{
+			"NetworkVehicleUndrivableEvent",
+			args => new NetworkVehicleUndrivableEvent
+			(
+				new Vehicle((int) args[0]),
+				Entity.FromHandle((int) args[1]),
+				(uint) args[2]
+			)
+		},
 	};
 	
 	[EventHandler("gameEventTriggered")]
