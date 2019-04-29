@@ -23,7 +23,7 @@ namespace PumaFramework.Client.Event
 	/// <summary>
 	/// todo
 	/// </summary>
-	class NetworkPlayerSpawnEvent : GameEvent
+	public class NetworkPlayerSpawnEvent : GameEvent
 	{
 		public NetworkPlayerSpawnEvent() { }
 	}
