@@ -6,7 +6,7 @@
     <SharedGUID>E6F83528-6A8A-40DC-A504-59ABFEB0D44D</SharedGUID>
   </PropertyGroup>
   <PropertyGroup Label="Configuration">
-    <Import_RootNamespace>PumaShared</Import_RootNamespace>
+    <Import_RootNamespace>PumaFramework.Shared</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)EventHandlerUtils.cs" />

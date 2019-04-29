@@ -7,7 +7,7 @@
     <ProjectGuid>{64499146-61A2-449B-8DED-76694A548B85}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>CoreServer</RootNamespace>
+    <RootNamespace>PumaFramework.Server</RootNamespace>
     <AssemblyName>PumaServer</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

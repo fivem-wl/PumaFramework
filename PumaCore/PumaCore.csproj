@@ -7,7 +7,7 @@
     <ProjectGuid>{35611B31-28C7-4178-B862-C02864EFE4B1}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Container</RootNamespace>
+    <RootNamespace>PumaFramework.Core</RootNamespace>
     <AssemblyName>PumaCore</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -62,7 +62,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Feature" />
+    <Folder Include="Feature\" />
     <Folder Include="Service\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

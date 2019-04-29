@@ -7,7 +7,7 @@
     <ProjectGuid>{70DDCD38-1F03-4884-839D-1FF867E74DE9}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>CoreClient</RootNamespace>
+    <RootNamespace>PumaFramework.Client</RootNamespace>
     <AssemblyName>PumaClient</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
