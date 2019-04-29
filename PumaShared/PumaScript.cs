@@ -46,6 +46,7 @@ public abstract class PumaScript : BaseScript
 			EventHandlerUtils.RegisterEventHandlers(EventHandlers, new ServerEventDispatcher(EventManager));
 		#elif CLIENT
 			EventHandlerUtils.RegisterEventHandlers(EventHandlers, new ClientEventDispatcher(EventManager));
+			EventHandlerUtils.RegisterEventHandlers(EventHandlers, new GameEventDispatcher(EventManager));
 		#endif
 
 		EventManager.RegisterEventHandlers(this);

@@ -63,6 +63,7 @@
     <Compile Include="Event\NetworkStartMatchEvent.cs" />
     <Compile Include="Event\NetworkStartSessionEvent.cs" />
     <Compile Include="Event\NetworkVehicleUndrivableEvent.cs" />
+    <Compile Include="GameEventDispatcher.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
