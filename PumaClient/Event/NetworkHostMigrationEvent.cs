@@ -15,16 +15,13 @@
  * along with PumaFramework.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-using CitizenFX.Core;
+namespace PumaFramework.Client.Event {
 
-
-namespace PumaFramework.Client.Event
+/// <summary>
+///     todo
+/// </summary>
+internal class NetworkHostMigrationEvent : GameEvent
 {
-	/// <summary>
-	/// todo
-	/// </summary>
-	class NetworkHostMigrationEvent : GameEvent
-	{
-		public NetworkHostMigrationEvent() { }
-	}
+}
+
 }

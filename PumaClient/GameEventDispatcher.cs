@@ -15,6 +15,7 @@
  * along with PumaFramework.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+using System;
 using System.Collections.Generic;
 using CitizenFX.Core;
 using PumaFramework.Client.Event;
@@ -39,7 +40,7 @@ public class GameEventDispatcher
 	}
 	
 	
-	static readonly IDictionary<string, System.Action<EventManager, IList<dynamic>>> GameEventDispatchers = new Dictionary<string, System.Action<EventManager, IList<dynamic>>>()
+	static readonly IDictionary<string, Action<EventManager, IList<dynamic>>> GameEventDispatchers = new Dictionary<string, Action<EventManager, IList<dynamic>>>()
 	{
 		{
 			"CEventNetworkEntityDamage",

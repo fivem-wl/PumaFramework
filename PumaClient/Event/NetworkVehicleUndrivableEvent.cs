@@ -17,30 +17,30 @@
 
 using CitizenFX.Core;
 
+namespace PumaFramework.Client.Event {
 
-namespace PumaFramework.Client.Event
+/// <summary>
+///     NetworkVehicleUndrivableEvent
+/// </summary>
+internal class NetworkVehicleUndrivableEvent : GameEvent
 {
+	public readonly Entity Attacker;
+	public readonly Vehicle Vehicle;
+	public readonly uint WeaponInfohash;
+
+
 	/// <summary>
-	/// NetworkVehicleUndrivableEvent
+	///     ctor.
 	/// </summary>
-	class NetworkVehicleUndrivableEvent : GameEvent
+	/// <param name="vehicle"></param>
+	/// <param name="attacker"></param>
+	/// <param name="weaponInfoHash"></param>
+	public NetworkVehicleUndrivableEvent(Vehicle vehicle, Entity attacker, uint weaponInfoHash)
 	{
-		public readonly Vehicle Vehicle;
-		public readonly Entity Attacker;
-		public readonly uint WeaponInfohash;
-
-
-		/// <summary>
-		/// ctor.
-		/// </summary>
-		/// <param name="vehicle"></param>
-		/// <param name="attacker"></param>
-		/// <param name="weaponInfoHash"></param>
-		public NetworkVehicleUndrivableEvent(Vehicle vehicle, Entity attacker, uint weaponInfoHash)
-		{
-			Vehicle = vehicle;
-			Attacker = attacker;
-			WeaponInfohash = weaponInfoHash;
-		}
+		Vehicle = vehicle;
+		Attacker = attacker;
+		WeaponInfohash = weaponInfoHash;
 	}
+}
+
 }
