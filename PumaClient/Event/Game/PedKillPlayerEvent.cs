@@ -18,15 +18,18 @@
 using CitizenFX.Core;
 
 namespace PumaFramework.Client.Event.Game {
-	public class PedKillPlayerEvent : EntityDamageSubEvent
-	{
-		public Ped Attacker => SourceEvent.Attacker as Ped;
-		public readonly Player Victim;
 
-		
-		public PedKillPlayerEvent(NetworkEntityDamageEvent source) : base(source)
-		{
-			Victim = source.Victim.ToPlayer();
-		}
+public class PedKillPlayerEvent : EntityDamageSubEvent
+{
+	public readonly Player Victim;
+
+
+	public PedKillPlayerEvent(NetworkEntityDamageEvent source) : base(source)
+	{
+		Victim = source.Victim.ToPlayer();
 	}
+
+	public Ped Attacker => SourceEvent.Attacker as Ped;
+}
+
 }

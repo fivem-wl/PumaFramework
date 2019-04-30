@@ -18,12 +18,11 @@
 namespace PumaFramework.Client.Event.Game {
 
 /// <summary>
-/// todo
-/// CEventNetworkAttemptHostMigration (1185028433, 1)
+///     todo
+///     CEventNetworkAttemptHostMigration (1185028433, 1)
 /// </summary>
 public class NetworkAttemptHostMigrationEvent : GameEvent
 {
-	public NetworkAttemptHostMigrationEvent() { }
 }
 
 }

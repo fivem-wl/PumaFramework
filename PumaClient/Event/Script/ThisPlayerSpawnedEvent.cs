@@ -17,19 +17,20 @@
 
 using CitizenFX.Core;
 
-namespace PumaFramework.Client.Event.Resource
-{
-	public class ThisPlayerSpawnedEvent : ScriptEvent
-	{
-		public readonly PedHash Model;
-		public readonly Vector3 Position;
-		public readonly float Heading;
+namespace PumaFramework.Client.Event.Resource {
 
-		public ThisPlayerSpawnedEvent(PedHash model, Vector3 position, float heading)
-		{
-			Model = model;
-			Position = position;
-			Heading = heading;
-		}
+public class ThisPlayerSpawnedEvent : ScriptEvent
+{
+	public readonly PedHash Model;
+	public readonly Vector3 Position;
+	public readonly float Heading;
+
+	public ThisPlayerSpawnedEvent(PedHash model, Vector3 position, float heading)
+	{
+		Model = model;
+		Position = position;
+		Heading = heading;
 	}
+}
+
 }

@@ -19,7 +19,6 @@ namespace PumaFramework.Client.Event.Game {
 
 public abstract class GameEvent : Core.Event.Event
 {
-	
 }
 
 }

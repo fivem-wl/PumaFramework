@@ -19,7 +19,7 @@ namespace PumaFramework.Client.Event.Game {
 
 /// <summary>
 ///     todo.
-/// CEventNetworkSignInStateChanged (0, 1, 1, 1, 1, 1, 0)
+///     CEventNetworkSignInStateChanged (0, 1, 1, 1, 1, 1, 0)
 /// </summary>
 public class NetworkSignInStateChangedEvent : GameEvent
 {

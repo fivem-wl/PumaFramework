@@ -19,7 +19,8 @@ namespace PumaFramework.Client.Event.Game {
 
 /// <summary>
 ///     todo
-/// CEventNetworkPlayerSpawn (842099565, 1362072, 1, 1360216, 0, 1361844, 1093195804, 0, 1096767534, 1116168848, 0, 1150970462, 1091252086, 1361664, 1083233733, 730229440, 1, -1)
+///     CEventNetworkPlayerSpawn (842099565, 1362072, 1, 1360216, 0, 1361844, 1093195804, 0, 1096767534, 1116168848, 0,
+///     1150970462, 1091252086, 1361664, 1083233733, 730229440, 1, -1)
 /// </summary>
 public class NetworkPlayerSpawnEvent : GameEvent
 {

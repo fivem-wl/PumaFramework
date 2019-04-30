@@ -18,25 +18,26 @@
 using CitizenFX.Core;
 using CitizenFX.Core.Native;
 
-namespace PumaFramework.Client
-{
-	public static class ClientEntityExtensions
-	{
-		/// <summary>
-		/// Convert <seealso cref="Entity"/> to <seealso cref="Player"/>.
-		/// </summary>
-		/// <param name="entity"></param>
-		/// <returns><seealso cref="Player"/> if converted successfully; otherwise, null.</returns>
-		public static Player ToPlayer(this Entity entity)
-			=> entity is Ped ? new Player(API.NetworkGetPlayerIndexFromPed(entity.Handle)) : null;
+namespace PumaFramework.Client {
 
-		/// <summary>
-		///	Try convert <seealso cref="Entity"/> to <seealso cref="Player"/>.
-		/// </summary>
-		/// <param name="entity"></param>
-		/// <param name="player"></param>
-		/// <returns>true if converted successfully; otherwise, false.</returns>
-		public static bool TryToPlayer(this Entity entity, out Player player)
-			=> (player = entity.ToPlayer()) != null;
-	}
+public static class ClientEntityExtensions
+{
+	/// <summary>
+	/// Convert <seealso cref="Entity"/> to <seealso cref="Player"/>.
+	/// </summary>
+	/// <param name="entity"></param>
+	/// <returns><seealso cref="Player"/> if converted successfully; otherwise, null.</returns>
+	public static Player ToPlayer(this Entity entity)
+		=> entity is Ped ? new Player(API.NetworkGetPlayerIndexFromPed(entity.Handle)) : null;
+
+	/// <summary>
+	///	Try convert <seealso cref="Entity"/> to <seealso cref="Player"/>.
+	/// </summary>
+	/// <param name="entity"></param>
+	/// <param name="player"></param>
+	/// <returns>true if converted successfully; otherwise, false.</returns>
+	public static bool TryToPlayer(this Entity entity, out Player player)
+		=> (player = entity.ToPlayer()) != null;
+}
+
 }

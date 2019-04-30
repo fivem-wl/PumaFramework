@@ -15,15 +15,16 @@
  * along with PumaFramework.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-namespace PumaFramework.Client.Event
-{
-	public class ClientMapStartEvent : Core.Event.Event
-	{
-		public readonly string ResourceName;
+namespace PumaFramework.Client.Event {
 
-		public ClientMapStartEvent(string resourceName)
-		{
-			ResourceName = resourceName;
-		}
+public class ClientMapStartEvent : Core.Event.Event
+{
+	public readonly string ResourceName;
+
+	public ClientMapStartEvent(string resourceName)
+	{
+		ResourceName = resourceName;
 	}
+}
+
 }
