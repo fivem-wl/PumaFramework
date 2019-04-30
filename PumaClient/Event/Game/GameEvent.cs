@@ -1,4 +1,4 @@
-﻿/*
+/*
  * This file is part of PumaFramework.
  *
  * PumaFramework is free software: you can redistribute it and/or modify
@@ -15,13 +15,11 @@
  * along with PumaFramework.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-namespace PumaFramework.Client.Event {
+namespace PumaFramework.Client.Event.Game {
 
-/// <summary>
-///     NetworkHostSessionEvent
-/// </summary>
-public class NetworkHostSessionEvent : GameEvent
+public abstract class GameEvent : Core.Event.Event
 {
+	
 }
 
 }

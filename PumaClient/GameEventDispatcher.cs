@@ -21,7 +21,7 @@ using System.Collections.Generic;
 using CitizenFX.Core;
 using CitizenFX.Core.Native;
 
-using PumaFramework.Client.Event;
+using PumaFramework.Client.Event.Game;
 using PumaFramework.Core.Event;
 
 

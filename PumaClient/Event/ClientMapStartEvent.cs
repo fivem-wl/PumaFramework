@@ -17,7 +17,7 @@
 
 namespace PumaFramework.Client.Event
 {
-	public class ClientMapStartEvent : GameEvent
+	public class ClientMapStartEvent : Core.Event.Event
 	{
 		public readonly string ResourceName;
 

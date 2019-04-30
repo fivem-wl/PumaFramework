@@ -15,14 +15,32 @@
  * along with PumaFramework.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-namespace PumaFramework.Client.Event {
+using CitizenFX.Core;
+
+namespace PumaFramework.Client.Event.Game {
 
 /// <summary>
-///     todo.
-/// CEventNetworkSignInStateChanged (0, 1, 1, 1, 1, 1, 0)
+///     NetworkVehicleUndrivableEvent
 /// </summary>
-public class NetworkSignInStateChangedEvent : GameEvent
+internal class NetworkVehicleUndrivableEvent : GameEvent
 {
+	public readonly Entity Attacker;
+	public readonly Vehicle Vehicle;
+	public readonly uint WeaponInfohash;
+
+
+	/// <summary>
+	///     ctor.
+	/// </summary>
+	/// <param name="vehicle"></param>
+	/// <param name="attacker"></param>
+	/// <param name="weaponInfoHash"></param>
+	public NetworkVehicleUndrivableEvent(Vehicle vehicle, Entity attacker, uint weaponInfoHash)
+	{
+		Vehicle = vehicle;
+		Attacker = attacker;
+		WeaponInfohash = weaponInfoHash;
+	}
 }
 
 }

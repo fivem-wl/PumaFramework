@@ -15,18 +15,14 @@
  * along with PumaFramework.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-using CitizenFX.Core;
+namespace PumaFramework.Client.Event.Game {
 
-namespace PumaFramework.Client.Event
+/// <summary>
+///     todo.
+/// CEventNetworkSignInStateChanged (0, 1, 1, 1, 1, 1, 0)
+/// </summary>
+public class NetworkSignInStateChangedEvent : GameEvent
 {
-	public class PlayerKillPedEvent : EntityDamageSubEvent
-	{
-		public readonly Player Attacker;
-		public Ped Victim => SourceEvent.Victim as Ped;
+}
 
-		public PlayerKillPedEvent(NetworkEntityDamageEvent source) : base(source)
-		{
-			Attacker = source.Attacker.ToPlayer();
-		}
-	}
 }

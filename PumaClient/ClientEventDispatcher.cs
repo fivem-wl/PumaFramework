@@ -17,6 +17,7 @@
 
 using CitizenFX.Core;
 using PumaFramework.Client.Event;
+using PumaFramework.Client.Event.Resource;
 using PumaFramework.Core.Event;
 using PumaFramework.Shared.Event;
 

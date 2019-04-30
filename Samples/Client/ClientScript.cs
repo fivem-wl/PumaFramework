@@ -17,7 +17,7 @@
 
 using System;
 using CitizenFX.Core;
-using PumaFramework.Client.Event;
+using PumaFramework.Client.Event.Game;
 using PumaFramework.Core.Event;
 using PumaFramework.Shared;
 using PumaFramework.Shared.Event;

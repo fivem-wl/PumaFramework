@@ -1,4 +1,4 @@
-﻿/*
+/*
  * This file is part of PumaFramework.
  *
  * PumaFramework is free software: you can redistribute it and/or modify
@@ -15,13 +15,21 @@
  * along with PumaFramework.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-namespace PumaFramework.Client.Event {
+using CitizenFX.Core;
 
-/// <summary>
-///     NetworkStartSessionEvent
-/// </summary>
-public class NetworkStartSessionEvent : GameEvent
+namespace PumaFramework.Client.Event.Resource
 {
-}
+	public class ThisPlayerSpawnedEvent : ScriptEvent
+	{
+		public readonly PedHash Model;
+		public readonly Vector3 Position;
+		public readonly float Heading;
 
+		public ThisPlayerSpawnedEvent(PedHash model, Vector3 position, float heading)
+		{
+			Model = model;
+			Position = position;
+			Heading = heading;
+		}
+	}
 }

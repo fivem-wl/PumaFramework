@@ -1,4 +1,4 @@
-/*
+﻿/*
  * This file is part of PumaFramework.
  *
  * PumaFramework is free software: you can redistribute it and/or modify
@@ -15,29 +15,15 @@
  * along with PumaFramework.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-using CitizenFX.Core;
+namespace PumaFramework.Client.Event.Game {
 
-namespace PumaFramework.Client.Event {
-
-public class NetworkEntityDamageEvent : GameEvent
+/// <summary>
+/// todo
+/// CEventNetworkAttemptHostMigration (1185028433, 1)
+/// </summary>
+public class NetworkAttemptHostMigrationEvent : GameEvent
 {
-	public readonly Entity Victim;
-	public readonly Entity Attacker;
-	public readonly bool IsFatal;
-	public readonly uint WeaponInfoHash;
-	public readonly bool IsMelee;
-	public readonly int DamageType;
-
-	
-	public NetworkEntityDamageEvent(Entity victim, Entity attacker, bool isFatal, uint weaponInfoHash, bool isMelee, int damageType)
-	{
-		Victim = victim;
-		Attacker = attacker ?? victim;		// Treat any unknown source as self source, such as set health to 0
-		IsFatal = isFatal;
-		WeaponInfoHash = weaponInfoHash;
-		IsMelee = isMelee;
-		DamageType = damageType;
-	}
+	public NetworkAttemptHostMigrationEvent() { }
 }
 
 }

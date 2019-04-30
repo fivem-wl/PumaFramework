@@ -15,14 +15,19 @@
  * along with PumaFramework.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-namespace PumaFramework.Client.Event {
+using CitizenFX.Core;
 
-/// <summary>
-///     todo
-/// CEventNetworkHostMigration (1185028433, 1)
-/// </summary>
-internal class NetworkHostMigrationEvent : GameEvent
+namespace PumaFramework.Client.Event.Game
 {
-}
+	public class EntityKillEntityEvent : EntityDamageSubEvent
+	{
+		public Entity Attacker	=> SourceEvent.Attacker;
+		public Entity Victim	=> SourceEvent.Victim;
 
+		
+		public EntityKillEntityEvent(NetworkEntityDamageEvent source) : base(source)
+		{
+			
+		}
+	}
 }

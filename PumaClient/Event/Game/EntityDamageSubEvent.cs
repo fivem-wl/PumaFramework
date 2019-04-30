@@ -1,4 +1,4 @@
-namespace PumaFramework.Client.Event {
+namespace PumaFramework.Client.Event.Game {
 
 public abstract class EntityDamageSubEvent : GameEvent
 {

@@ -15,12 +15,12 @@
  * along with PumaFramework.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-namespace PumaFramework.Client.Event {
+namespace PumaFramework.Client.Event.Game {
 
 /// <summary>
-///     NetworkStartMatchEvent
+///     NetworkHostSessionEvent
 /// </summary>
-public class NetworkStartMatchEvent : GameEvent
+public class NetworkHostSessionEvent : GameEvent
 {
 }
 

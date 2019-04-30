@@ -15,15 +15,13 @@
  * along with PumaFramework.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-namespace PumaFramework.Client.Event {
+namespace PumaFramework.Client.Event.Game {
 
 /// <summary>
-/// todo
-/// CEventNetworkAttemptHostMigration (1185028433, 1)
+///     NetworkPlayerJoinScriptEvent
 /// </summary>
-public class NetworkAttemptHostMigrationEvent : GameEvent
+public class NetworkPlayerJoinScriptEvent : GameEvent
 {
-	public NetworkAttemptHostMigrationEvent() { }
 }
 
 }
