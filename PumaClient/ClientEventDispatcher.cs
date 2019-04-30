@@ -44,6 +44,12 @@ class ClientEventDispatcher
 		_eventManager.DispatchEvent(new ResourceStopEvent(resourceName));
 	}
 
+	[EventHandler("onClientMapStart")]
+	void OnClientMapStart(string resourceName)
+	{
+		_eventManager.DispatchEvent(new ClientMapStartEvent(resourceName));
+	}
+
 	[EventHandler("playerSpawned")]
 	void OnThisPlayerSpawn(dynamic spawnObject)
 	{
