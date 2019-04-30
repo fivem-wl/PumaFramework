@@ -43,16 +43,17 @@ public class GameEventDispatcher
 		if (!GameEventDispatchers.ContainsKey(name)) return;
 		GameEventDispatchers[name]?.Invoke(_eventManager, args);
 	}
-	
-	
-	static readonly IDictionary<string, Action<EventManager, IList<dynamic>>> GameEventDispatchers = new Dictionary<string, Action<EventManager, IList<dynamic>>>()
+
+
+	private static readonly IDictionary<string, Action<EventManager, IList<dynamic>>> GameEventDispatchers = new Dictionary<string, Action<EventManager, IList<dynamic>>>()
 	{
 		{
 			"CEventNetworkEntityDamage",
 			(m, args) =>
 			{
 				var victim = Entity.FromHandle((int) args[0]);
-				var attacker = Entity.FromHandle((int) args[1]);
+				// Treat any unknown source as self source, such as set health to 0
+				var attacker = Entity.FromHandle((int) args[1]) ?? victim;
 				var isFatal = (int) args[3] == 1;
 				var weaponInfoHash = (uint) args[4];
 				var isMelee = (int) args[9] != 0;
@@ -134,50 +135,56 @@ public class GameEventDispatcher
 		},
 
 		{
-			"NetworkHostSessionEvent",
+			"CEventNetworkSignInStateChanged",
+			(m, args) => m.DispatchEvent(new NetworkSignInStateChangedEvent())
+		},
+		{
+			"CEventNetworkHostSession",
 			(m, args) => m.DispatchEvent(new NetworkHostSessionEvent())
 		},
 		{
-			"NetworkStartSessionEvent",
+			"CEventNetworkStartSession",
 			(m, args) => m.DispatchEvent(new NetworkStartSessionEvent())
 		},
 
 		{
-			"NetworkStartMatchEvent",
+			"CEventNetworkStartMatch",
 			(m, args) => m.DispatchEvent(new NetworkStartMatchEvent())
 		},
 
 		{
-			"NetworkPlayerJoinScriptEvent",
+			"CEventNetworkPlayerJoinScript",
 			(m, args) => m.DispatchEvent(new NetworkPlayerJoinScriptEvent())
 		},
 		{
-			"NetworkPlayerLeftScriptEvent",
+			"CEventNetworkPlayerLeftScript",
 			(m, args) => m.DispatchEvent(new NetworkPlayerLeftScriptEvent())
 		},
 
 		{
-			"NetworkPlayerSpawnEvent",
+			"CEventNetworkPlayerSpawn",
 			(m, args) => m.DispatchEvent(new NetworkPlayerSpawnEvent())
 		},
 
 		{
-			"NetworkAttemptHostMigrationEvent",
+			"CEventNetworkAttemptHostMigration",
 			(m, args) => m.DispatchEvent(new NetworkAttemptHostMigrationEvent())
 		},
 		{
-			"NetworkHostMigrationEvent",
+			"CEventNetworkHostMigration",
 			(m, args) => m.DispatchEvent(new NetworkHostMigrationEvent())
 		},
 
 		{
-			"NetworkVehicleUndrivableEvent",
-			(m, args) => m.DispatchEvent(new NetworkVehicleUndrivableEvent
-			(
-				new Vehicle((int) args[0]),
-				Entity.FromHandle((int) args[1]),
-				(uint) args[2]
-			))
+			"CEventNetworkVehicleUndrivable",
+			(m, args) =>
+			{
+				var vehicle = new Vehicle((int) args[0]);
+				// Treat any unknown source as self source, such as set health to 0
+				var causer = Entity.FromHandle((int) args[1]) ?? vehicle;
+				var weaponInfoHash = (uint) (uint) args[2];
+				m.DispatchEvent(new NetworkVehicleUndrivableEvent(vehicle, causer, weaponInfoHash));
+			}
 		},
 	};
 }
