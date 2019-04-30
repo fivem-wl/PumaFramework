@@ -34,7 +34,7 @@ public class ClientScript : PumaScript
 	[PumaEventHandler]
 	void OnResourceStart(ResourceStartEvent @event)
 	{
-		Debug.WriteLine($"[ResourceStartEvent]test");
+		Debug.WriteLine($"[ResourceStartEvent]{@event.ResourceName}");
 	}
 	
 	[PumaEventHandler]
@@ -55,8 +55,33 @@ public class ClientScript : PumaScript
 	[PumaEventHandler]
 	void OnPlayerDead(PlayerDeadEvent @event)
 	{
-		Debug.WriteLine($"{@event.Victim.Name}, {@event.Attacker.Model}, " +
+		Debug.WriteLine($"[OnPlayerDead]{@event.Victim.Handle}, {@event.Attacker.Handle}, " +
 		                $"{@event.WeaponInfoHash}, {@event.IsMelee}, {@event.DamageType}");
+	}
+
+	[PumaEventHandler]
+	void OnPlayerKillPed(PlayerKillPedEvent @event)
+	{
+		Debug.WriteLine($"[OnPlayerKillPed]{@event.Attacker.Handle}, {@event.Victim.Handle}, " +
+		                $"{@event.WeaponInfoHash}, {@event.IsMelee}, {@event.DamageType}");
+	}
+
+	[PumaEventHandler]
+	void OnNetworkPlayerLeftScript(NetworkPlayerLeftScriptEvent @event)
+	{
+		Debug.WriteLine($"OnNetworkPlayerLeftScript NetworkPlayerLeftScriptEvent");
+	}
+
+	[PumaEventHandler]
+	void OnNetworkHostSession(NetworkHostSessionEvent @event)
+	{
+		Debug.WriteLine($"NetworkHostSessionEvent");
+	}
+
+	[PumaEventHandler]
+	void OnNetworkPlayerSpawn(NetworkPlayerSpawnEvent @event)
+	{
+		Debug.WriteLine($"NetworkPlayerSpawnEvent");
 	}
 
 	protected override void OnStart()
