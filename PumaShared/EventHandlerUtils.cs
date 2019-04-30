@@ -21,6 +21,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using CitizenFX.Core;
+using PumaFramework.Core;
 
 namespace PumaFramework.Shared {
 
@@ -28,7 +29,7 @@ public static class EventHandlerUtils
 {
 	public static IEnumerable<Delegate> RegisterEventHandlers(EventHandlerDictionary handlerDictionary, object obj)
 	{
-		return obj.GetType().GetMethods(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)
+		return obj.GetType().GetMethodsEx(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)
 			.Where(method => method.GetCustomAttribute<EventHandlerAttribute>() != null)
 			.Select(method =>
 			{
