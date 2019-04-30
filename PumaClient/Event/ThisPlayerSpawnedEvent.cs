@@ -21,17 +21,15 @@ namespace PumaFramework.Client.Event
 {
 	public class ThisPlayerSpawnedEvent : GameEvent
 	{
+		public readonly PedHash Model;
 		public readonly Vector3 Position;
 		public readonly float Heading;
-		public readonly int Index;
-		public readonly PedHash Model;
 
-		public ThisPlayerSpawnedEvent(Vector3 position, float heading, int index, PedHash model)
+		public ThisPlayerSpawnedEvent(PedHash model, Vector3 position, float heading)
 		{
+			Model = model;
 			Position = position;
 			Heading = heading;
-			Index = index;
-			Model = model;
 		}
 	}
 }
