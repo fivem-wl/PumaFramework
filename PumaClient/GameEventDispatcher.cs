@@ -69,21 +69,21 @@ public class GameEventDispatcher
 					var isVictimPed = false;
 					var isVictimPlayer = false;
 					var isVictimThisPlayer = false;
-					// ��������Ped
+					// 攻击者是Ped
 					if (attacker is Ped pedAttacker)
 					{
 						isAttackerPed = true;
-						// ��������Player
+						// 攻击者是Player
 						if (pedAttacker.IsPlayer)
 						{
 							isAttackerPlayer = true;
 						}
 					}
-					// �ܺ�����Ped
+					// 受害者是Ped
 					if (victim is Ped pedVictim)
 					{
 						isVictimPed = true;
-						// �ܺ�����Player
+						// 受害者是Player
 						if (pedVictim.IsPlayer)
 						{
 							isVictimPlayer = true;
@@ -122,7 +122,7 @@ public class GameEventDispatcher
 					}
 					#endregion
 				}
-				// More specific damage events to dispath (todo)
+				// More specific damage events to dispatch (todo)
 				else
 				{
 
