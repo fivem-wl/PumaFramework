@@ -50,15 +50,16 @@ public class EventManager
 	{
 		if (_objectEventHandlers.ContainsKey(obj)) return false;
 
-		var handlers = obj.GetType().GetMethods(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)
+		var handlers = obj.GetType().GetMethodsEx(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)
 			.Where(method => method.GetCustomAttribute<PumaEventHandlerAttribute>() != null)
 			.Where(method => method.GetParameters().Length == 1)
-			.Where(method => method.GetParameters()[0].GetType().IsSubclassOf(typeof(Event)))
+			.Where(method => method.GetParameters()[0].ParameterType.IsSubclassOf(typeof(Event)))
 			.Select(method => RegisterEventHandler(
-				method.GetParameters()[0].GetType(),
+				method.GetParameters()[0].ParameterType,
 				method.GetCustomAttribute<PumaEventHandlerAttribute>().Priority,
 				@event => method.Invoke(obj, new[] {@event})
-			));
+			))
+			.ToList();
 		
 		_objectEventHandlers[obj] = handlers;
 		return true;

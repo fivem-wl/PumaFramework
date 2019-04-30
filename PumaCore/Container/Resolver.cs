@@ -67,7 +67,7 @@ public class Resolver : IResolver
 			
 			component.Init();
 			initializingComponents[component] = true;
-			return false;
+			return true;
 		}
 
 		if (!container._components

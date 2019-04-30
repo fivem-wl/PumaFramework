@@ -15,10 +15,7 @@
  * along with PumaFramework.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-using System;
-using System.Collections.Generic;
 using CitizenFX.Core;
-using PumaFramework.Client.Event;
 using PumaFramework.Core.Event;
 using PumaFramework.Shared.Event;
 

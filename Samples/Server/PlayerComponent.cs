@@ -15,7 +15,6 @@
  * along with PumaFramework.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-using System;
 using CitizenFX.Core;
 using PumaFramework.Server;
 
@@ -25,14 +24,15 @@ public class PlayerComponent : PlayerLifecycleComponent
 {
 	public PlayerComponent(Player player) : base(player) {}
 
+	
 	public override void Init()
 	{
-		Console.WriteLine($"{Player.Name} has joined the server.");
+		Debug.WriteLine($"{Player.Name} has joined the server.");
 	}
 
 	public override void Destroy()
 	{
-		Console.WriteLine($"{Player.Name} left the server.");
+		Debug.WriteLine($"{Player.Name} left the server.");
 	}
 }
 

@@ -41,6 +41,7 @@ public abstract class PumaScript : BaseScript
 	{
 		RootResolver.RegisterReference<PumaScript>(this);
 		RootResolver.RegisterReference<EventHandlerDictionary>(EventHandlers);
+		RootResolver.RegisterReference<EventManager>(EventManager);
 
 		#if SERVER
 			EventHandlerUtils.RegisterEventHandlers(EventHandlers, new ServerEventDispatcher(EventManager));
