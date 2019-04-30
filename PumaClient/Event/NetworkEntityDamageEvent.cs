@@ -32,7 +32,7 @@ public class NetworkEntityDamageEvent : GameEvent
 	public NetworkEntityDamageEvent(Entity victim, Entity attacker, bool isFatal, uint weaponInfoHash, bool isMelee, int damageType)
 	{
 		Victim = victim;
-		Attacker = attacker;
+		Attacker = attacker ?? victim;		// Treat any unknown source as self source, such as set health to 0
 		IsFatal = isFatal;
 		WeaponInfoHash = weaponInfoHash;
 		IsMelee = isMelee;

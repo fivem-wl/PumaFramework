@@ -40,8 +40,8 @@ public class GameEventDispatcher
 	[EventHandler("gameEventTriggered")]
 	void OnGameEventTriggered(string name, IList<dynamic> args)
 	{
-		if (!GameEventDispatchers.ContainsKey(name)) return;
-		GameEventDispatchers[name]?.Invoke(_eventManager, args);
+		if (!GameEventDispatchers.TryGetValue(name, out var dispatcher)) return;
+		dispatcher.Invoke(_eventManager, args);
 	}
 
 
@@ -51,78 +51,33 @@ public class GameEventDispatcher
 			"CEventNetworkEntityDamage",
 			(m, args) =>
 			{
-				var victim = Entity.FromHandle((int) args[0]);
-				// Treat any unknown source as self source, such as set health to 0
-				var attacker = Entity.FromHandle((int) args[1]) ?? victim;
-				var isFatal = (int) args[3] == 1;
-				var weaponInfoHash = (uint) args[4];
-				var isMelee = (int) args[9] != 0;
-				var damageType = (int) args[10];
-
 				// Base event to dispatch
-				m.DispatchEvent(new NetworkEntityDamageEvent(victim, attacker, isFatal, weaponInfoHash, isMelee, damageType));
+				var damageEvent = new NetworkEntityDamageEvent(
+					Entity.FromHandle((int) args[0]),
+					Entity.FromHandle((int) args[1]),
+					(int) args[3] == 1,
+					(uint) args[4],
+					(int) args[9] != 0,
+					(int) args[10]
+				);
+				m.DispatchEvent(damageEvent);
 
 				// More specific fatal events to dispatch
-				if (isFatal)
+				if (damageEvent.IsFatal)
 				{
-					#region Conditions
-					var isAttackerPed = false;
-					var isAttackerPlayer = false;
-					var isVictimPed = false;
-					var isVictimPlayer = false;
-					var isVictimThisPlayer = false;
-					// 攻击者是Ped
-					if (attacker is Ped pedAttacker)
-					{
-						isAttackerPed = true;
-						// 攻击者是Player
-						if (pedAttacker.IsPlayer)
-						{
-							isAttackerPlayer = true;
-						}
-					}
-					// 受害者是Ped
-					if (victim is Ped pedVictim)
-					{
-						isVictimPed = true;
-						// 受害者是Player
-						if (pedVictim.IsPlayer)
-						{
-							isVictimPlayer = true;
-							if (victim.ToPlayer() == Game.Player)
-							{
-								isVictimThisPlayer = true;
-							}
-						}
-					}
-					#endregion
-					#region Dispatch
-					if (isAttackerPlayer && isVictimPlayer)
-					{
-						m.DispatchEvent(new PlayerKillPlayerEvent(attacker.ToPlayer(), victim.ToPlayer(), weaponInfoHash, isMelee, damageType));
-					}
-					else if (isAttackerPlayer && isVictimPed)
-					{
-						m.DispatchEvent(new PlayerKillPedEvent(attacker.ToPlayer(), (Ped)victim, weaponInfoHash, isMelee, damageType));
-					}
-					else if (isAttackerPed && isVictimPlayer)
-					{
-						m.DispatchEvent(new PedKillPlayerEvent((Ped)attacker, victim.ToPlayer(), weaponInfoHash, isMelee, damageType));
-					}
-					else if (isVictimPed && isAttackerPed)
-					{
-						m.DispatchEvent(new PedKillPedEvent((Ped)attacker, (Ped)victim, weaponInfoHash, isMelee, damageType));
-					}
-					else
-					{
-						m.DispatchEvent(new EntityKillEntityEvent(attacker, victim, weaponInfoHash, isMelee, damageType));
-					}
+					var isAttackerPed = damageEvent.Attacker is Ped;
+					var isAttackerPlayer = isAttackerPed && ((Ped) damageEvent.Attacker).IsPlayer;
+					var isVictimPed = damageEvent.Victim is Ped;
+					var isVictimPlayer = isVictimPed && ((Ped) damageEvent.Victim).IsPlayer;
+					var isVictimThisPlayer = isVictimPlayer && (damageEvent.Victim.ToPlayer() == Game.Player);
+					
+					if (isAttackerPlayer && isVictimPlayer)	m.DispatchEvent(new PlayerKillPlayerEvent(damageEvent));
+					else if (isAttackerPlayer && isVictimPed)	m.DispatchEvent(new PlayerKillPedEvent(damageEvent));
+					else if (isAttackerPed && isVictimPlayer)	m.DispatchEvent(new PedKillPlayerEvent(damageEvent));
+					else if (isVictimPed && isAttackerPed)		m.DispatchEvent(new PedKillPedEvent(damageEvent));
+					else										m.DispatchEvent(new EntityKillEntityEvent(damageEvent));
 
-					if (isVictimThisPlayer)
-					{
-						m.DispatchEvent(new PlayerDeadEvent(victim.ToPlayer(), attacker, weaponInfoHash, isMelee, damageType));
-					}
-					#endregion
+					if (isVictimThisPlayer) m.DispatchEvent(new PlayerDeadEvent(damageEvent));
 				}
 				// More specific damage events to dispatch (todo)
 				else

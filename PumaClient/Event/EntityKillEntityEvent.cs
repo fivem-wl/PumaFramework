@@ -19,21 +19,14 @@ using CitizenFX.Core;
 
 namespace PumaFramework.Client.Event
 {
-	public class EntityKillEntityEvent : GameEvent
+	public class EntityKillEntityEvent : EntityDamageSubEvent
 	{
-		public readonly Entity Attacker;
-		public readonly Entity Victim;
-		public readonly uint WeaponInfoHash;
-		public readonly bool IsMelee;
-		public readonly int DamageType;
+		public Entity Attacker	=> SourceEvent.Attacker;
+		public Entity Victim	=> SourceEvent.Victim;
 
-		public EntityKillEntityEvent(Entity attacker, Entity victim, uint weaponInfoHash, bool isMelee, int damageType)
+		public EntityKillEntityEvent(NetworkEntityDamageEvent source) : base(source)
 		{
-			Attacker = attacker;
-			Victim = victim;
-			WeaponInfoHash = weaponInfoHash;
-			IsMelee = isMelee;
-			DamageType = damageType;
+			
 		}
 	}
 }

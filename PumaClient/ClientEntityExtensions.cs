@@ -37,6 +37,6 @@ namespace PumaFramework.Client
 		/// <param name="player"></param>
 		/// <returns>true if converted successfully; otherwise, false.</returns>
 		public static bool TryToPlayer(this Entity entity, out Player player)
-			=> ((player = entity.ToPlayer()) is null) ? false : true;
+			=> (player = entity.ToPlayer()) != null;
 	}
 }
