@@ -48,19 +48,6 @@ public class GameEventDispatcher
 	{
 		{
 			"CEventNetworkEntityDamage",
-			(m, args) => m.DispatchEvent(new NetworkEntityDamageEvent
-			(
-				Entity.FromHandle((int) args[0]), 
-				Entity.FromHandle((int) args[1]), 
-				(int) args[3] == 1,
-				(uint) args[4],
-				(int) args[9] != 0,
-				(int) args[10]
-			))
-		},
-
-		{
-			"CEventNetworkEntityDamage",
 			(m, args) =>
 			{
 				var victim = Entity.FromHandle((int) args[0]);
@@ -82,21 +69,21 @@ public class GameEventDispatcher
 					var isVictimPed = false;
 					var isVictimPlayer = false;
 					var isVictimThisPlayer = false;
-					// ¹¥»÷ÕßÊÇPed
+					// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ped
 					if (attacker is Ped pedAttacker)
 					{
 						isAttackerPed = true;
-						// ¹¥»÷ÕßÊÇPlayer
+						// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Player
 						if (pedAttacker.IsPlayer)
 						{
 							isAttackerPlayer = true;
 						}
 					}
-					// ÊÜº¦ÕßÊÇPed
+					// ï¿½Üºï¿½ï¿½ï¿½ï¿½ï¿½Ped
 					if (victim is Ped pedVictim)
 					{
 						isVictimPed = true;
-						// ÊÜº¦ÕßÊÇPlayer
+						// ï¿½Üºï¿½ï¿½ï¿½ï¿½ï¿½Player
 						if (pedVictim.IsPlayer)
 						{
 							isVictimPlayer = true;
