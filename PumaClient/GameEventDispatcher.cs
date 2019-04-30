@@ -17,9 +17,13 @@
 
 using System;
 using System.Collections.Generic;
+
 using CitizenFX.Core;
+using CitizenFX.Core.Native;
+
 using PumaFramework.Client.Event;
 using PumaFramework.Core.Event;
+
 
 namespace PumaFramework.Client {
 
@@ -53,6 +57,92 @@ public class GameEventDispatcher
 				(int) args[9] != 0,
 				(int) args[10]
 			))
+		},
+
+		{
+			"CEventNetworkEntityDamage",
+			(m, args) =>
+			{
+				var victim = Entity.FromHandle((int) args[0]);
+				var attacker = Entity.FromHandle((int) args[1]);
+				var isFatal = (int) args[3] == 1;
+				var weaponInfoHash = (uint) args[4];
+				var isMelee = (int) args[9] != 0;
+				var damageType = (int) args[10];
+
+				// Base event to dispatch
+				m.DispatchEvent(new NetworkEntityDamageEvent(victim, attacker, isFatal, weaponInfoHash, isMelee, damageType));
+
+				// More specific fatal events to dispatch
+				if (isFatal)
+				{
+					#region Conditions
+					var isAttackerPed = false;
+					var isAttackerPlayer = false;
+					var isVictimPed = false;
+					var isVictimPlayer = false;
+					var isVictimThisPlayer = false;
+					// 攻击者是Ped
+					if (attacker is Ped pedAttacker)
+					{
+						isAttackerPed = true;
+						// 攻击者是Player
+						if (pedAttacker.IsPlayer)
+						{
+							isAttackerPlayer = true;
+						}
+					}
+					// 受害者是Ped
+					if (victim is Ped pedVictim)
+					{
+						isVictimPed = true;
+						// 受害者是Player
+						if (pedVictim.IsPlayer)
+						{
+							isVictimPlayer = true;
+							if (victim.ToPlayer() == Game.Player)
+							{
+								isVictimThisPlayer = true;
+							}
+						}
+					}
+					#endregion
+					#region Dispatch
+					if (isAttackerPlayer && isVictimPlayer)
+					{
+						m.DispatchEvent(new PlayerKillPlayerEvent(attacker.ToPlayer(), victim.ToPlayer(), weaponInfoHash, isMelee, damageType));
+					}
+					else if (isAttackerPlayer && isVictimPed)
+					{
+						m.DispatchEvent(new PlayerKillPedEvent(attacker.ToPlayer(), (Ped)victim, weaponInfoHash, isMelee, damageType));
+					}
+					else if (isAttackerPed && isVictimPlayer)
+					{
+						m.DispatchEvent(new PedKillPlayerEvent((Ped)attacker, victim.ToPlayer(), weaponInfoHash, isMelee, damageType));
+					}
+					else if (isVictimPed && isAttackerPed)
+					{
+						m.DispatchEvent(new PedKillPedEvent((Ped)attacker, (Ped)victim, weaponInfoHash, isMelee, damageType));
+					}
+					else
+					{
+						m.DispatchEvent(new EntityKillEntityEvent(attacker, victim, weaponInfoHash, isMelee, damageType));
+					}
+
+					if (isVictimThisPlayer)
+					{
+						m.DispatchEvent(new PlayerDeadEvent(victim.ToPlayer(), attacker, weaponInfoHash, isMelee, damageType));
+					}
+					#endregion
+				}
+				// More specific damage events to dispath (todo)
+				else
+				{
+
+				}
+
+				
+			}
 		},
 
 		{

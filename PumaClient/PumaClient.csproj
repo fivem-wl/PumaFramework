@@ -50,7 +50,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ClientEntityExtensions.cs" />
     <Compile Include="ClientEventDispatcher.cs" />
+    <Compile Include="Event\EntityKillEntityEvent.cs" />
     <Compile Include="Event\GameEvent.cs" />
     <Compile Include="Event\NetworkAttemptHostMigrationEvent.cs" />
     <Compile Include="Event\NetworkEntityDamageEvent.cs" />
@@ -63,6 +65,11 @@
     <Compile Include="Event\NetworkStartMatchEvent.cs" />
     <Compile Include="Event\NetworkStartSessionEvent.cs" />
     <Compile Include="Event\NetworkVehicleUndrivableEvent.cs" />
+    <Compile Include="Event\PedKillPedEvent.cs" />
+    <Compile Include="Event\PedKillPlayerEvent.cs" />
+    <Compile Include="Event\PlayerDeadEvent.cs" />
+    <Compile Include="Event\PlayerKillPedEvent.cs" />
+    <Compile Include="Event\PlayerKillPlayerEvent.cs" />
     <Compile Include="GameEventDispatcher.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
