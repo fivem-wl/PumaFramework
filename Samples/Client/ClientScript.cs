@@ -16,7 +16,11 @@
  */
 
 using System;
+using CitizenFX.Core;
+using PumaFramework.Client.Event;
+using PumaFramework.Core.Event;
 using PumaFramework.Shared;
+using PumaFramework.Shared.Event;
 
 namespace Client {
 
@@ -24,11 +28,35 @@ public class ClientScript : PumaScript
 {
 	public ClientScript()
 	{
-		EventHandlers["onClientMapStart"] += new Action(() =>
-		{
-			Exports["spawnmanager"].setAutoSpawn(true);
-			Exports["spawnmanager"].forceRespawn();
-		});
+		
+	}
+
+	[PumaEventHandler]
+	void OnResourceStart(ResourceStartEvent @event)
+	{
+		Debug.WriteLine($"[ResourceStartEvent]test");
+	}
+	
+	[PumaEventHandler]
+	void OnClientMapStrat(ClientMapStartEvent @event)
+	{
+		Debug.WriteLine($"[ClientMapStartEvent]{@event.ResourceName}");
+		Exports["spawnmanager"].setAutoSpawn(true);
+		Exports["spawnmanager"].forceRespawn();	
+	}
+	
+	[PumaEventHandler]
+	void OnThisPlayerSpawn(ThisPlayerSpawnedEvent @event)
+	{
+		Debug.WriteLine($"[OnThisPlayerSpawn]{Game.Player.Name}, " +
+		                $"{@event.Model}, {@event.Position}, {@event.Heading}");
+	}
+
+	[PumaEventHandler]
+	void OnPlayerDead(PlayerDeadEvent @event)
+	{
+		Debug.WriteLine($"{@event.Victim.Name}, {@event.Attacker.Model}, " +
+		                $"{@event.WeaponInfoHash}, {@event.IsMelee}, {@event.DamageType}");
 	}
 
 	protected override void OnStart()
