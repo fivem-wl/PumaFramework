@@ -70,6 +70,7 @@
     <Compile Include="Event\PlayerDeadEvent.cs" />
     <Compile Include="Event\PlayerKillPedEvent.cs" />
     <Compile Include="Event\PlayerKillPlayerEvent.cs" />
+    <Compile Include="Event\ThisPlayerSpawnedEvent.cs" />
     <Compile Include="GameEventDispatcher.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

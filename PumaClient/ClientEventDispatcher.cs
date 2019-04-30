@@ -16,6 +16,7 @@
  */
 
 using CitizenFX.Core;
+using PumaFramework.Client.Event;
 using PumaFramework.Core.Event;
 using PumaFramework.Shared.Event;
 
@@ -41,6 +42,16 @@ class ClientEventDispatcher
 	void OnResourceStop(string resourceName)
 	{
 		_eventManager.DispatchEvent(new ResourceStopEvent(resourceName));
+	}
+
+	[EventHandler("playerSpawned")]
+	void OnThisPlayerSpawn(dynamic spawnObject)
+	{
+		var position = new Vector3(spawnObject.x, spawnObject.y, spawnObject.z);
+		float heading = spawnObject.heading;
+		int index = spawnObject.idx;
+		var model = (PedHash)spawnObject.model;
+		_eventManager.DispatchEvent(new ThisPlayerSpawnedEvent(position, heading, index, model));
 	}
 }
 
