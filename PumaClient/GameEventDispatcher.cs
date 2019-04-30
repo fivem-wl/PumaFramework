@@ -40,6 +40,7 @@ public class GameEventDispatcher
 	[EventHandler("gameEventTriggered")]
 	void OnGameEventTriggered(string name, IList<dynamic> args)
 	{
+		if (!GameEventDispatchers.ContainsKey(name)) return;
 		GameEventDispatchers[name]?.Invoke(_eventManager, args);
 	}
 	
