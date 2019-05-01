@@ -34,6 +34,11 @@ public static class TypeExtensions
 		}
 		return methods.ToArray();
 	}
+	
+	public static T New<T>(params object[] args) where T : class
+	{
+		return Activator.CreateInstance(typeof(T), args) as T;
+	}
 }
 
 }

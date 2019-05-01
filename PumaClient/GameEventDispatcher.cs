@@ -23,6 +23,7 @@ using CitizenFX.Core.Native;
 
 using PumaFramework.Client.Event.Game;
 using PumaFramework.Core.Event;
+using static PumaFramework.Core.TypeExtensions;
 
 
 namespace PumaFramework.Client {
@@ -61,7 +62,7 @@ public class GameEventDispatcher
 				);
 				m.DispatchEvent(damageEvent);
 
-				// More specific (fatal) events to dispatch (todo)
+				// More specific (fatal) damage events to dispatch (todo)
 				var isAttackerPed = damageEvent.Attacker is Ped;
 				var isAttackerPlayer = isAttackerPed && ((Ped) damageEvent.Attacker).IsPlayer;
 				var isAttackerNpc = isAttackerPed && !isAttackerPlayer;
@@ -70,29 +71,26 @@ public class GameEventDispatcher
 				var isVictimThisPlayer = isVictimPlayer && (damageEvent.Victim.ToPlayer() == Game.Player);
 				var isVictimNpc = isVictimPed && !isVictimPlayer;
 
-				if (damageEvent.IsFatal)
+				void DispatchDamageEvent<TDamage, TKill>()
+					where TDamage : EntityDamageSubEvent
+					where TKill : EntityDamageSubEvent
 				{
-					if (isAttackerPlayer && isVictimPlayer)	m.DispatchEvent(new PlayerDamagePlayerEvent(damageEvent));
-					if (isAttackerPlayer && isVictimNpc)	m.DispatchEvent(new PlayerDamageNpcEvent(damageEvent));
-					if (isAttackerNpc && isVictimPlayer)	m.DispatchEvent(new NpcDamagePlayerEvent(damageEvent));
-					if (isAttackerNpc && isVictimNpc)		m.DispatchEvent(new NpcDamageNpcEvent(damageEvent));
-
-					if (isVictimPlayer) 	m.DispatchEvent(new PlayerDamagedEvent(damageEvent));
-					if (isVictimThisPlayer) m.DispatchEvent(new ThisPlayerDamagedEvent(damageEvent));
-					if (isVictimNpc) 		m.DispatchEvent(new NpcDamagedEvent(damageEvent));
+					if (damageEvent.IsFatal)	m.DispatchEvent(New<TKill>(damageEvent), typeof(TDamage), typeof(TKill));
+					else            			m.DispatchEvent(New<TDamage>(damageEvent));
 				}
-				else
-				{
-					if (isAttackerPlayer && isVictimPlayer)	m.DispatchEvent(new PlayerKillPlayerEvent(damageEvent), typeof(PlayerKillPlayerEvent), typeof(PlayerDamagePlayerEvent));
-					if (isAttackerPlayer && isVictimNpc)	m.DispatchEvent(new PlayerKillNpcEvent(damageEvent), typeof(PlayerKillNpcEvent), typeof(PlayerDamageNpcEvent));
-					if (isAttackerNpc && isVictimPlayer)	m.DispatchEvent(new NpcKillPlayerEvent(damageEvent), typeof(NpcKillPlayerEvent), typeof(NpcDamagePlayerEvent));
-					if (isAttackerNpc && isVictimNpc)		m.DispatchEvent(new NpcKillNpcEvent(damageEvent), typeof(NpcKillNpcEvent), typeof(NpcDamageNpcEvent));
 
-					if (isVictimPlayer) 	m.DispatchEvent(new PlayerDeadEvent(damageEvent), typeof(PlayerDeadEvent), typeof(PlayerDamagedEvent));
-					if (isVictimThisPlayer) m.DispatchEvent(new ThisPlayerDeadEvent(damageEvent), typeof(ThisPlayerDeadEvent), typeof(NpcDamagedEvent));
-					if (isVictimNpc) 		m.DispatchEvent(new NpcDeadEvent(damageEvent), typeof(NpcDeadEvent), typeof(NpcDamagedEvent));
-				}
-				
+				// (todo)
+//				if(isAttackerPed && isVictimPed) 		DispatchDamageEvent<PedDamagePedEvent, PedKillPedEvent>();
+				if(isAttackerPlayer && isVictimPlayer) 	DispatchDamageEvent<PlayerDamagePlayerEvent, PlayerKillPlayerEvent>();
+				if(isAttackerPlayer && isVictimNpc) 	DispatchDamageEvent<PlayerDamageNpcEvent, PlayerDamageNpcEvent>();
+				if(isAttackerNpc && isVictimPlayer) 	DispatchDamageEvent<NpcDamagePlayerEvent, NpcDamagePlayerEvent>();
+				if(isAttackerNpc && isVictimNpc) 		DispatchDamageEvent<NpcDamageNpcEvent, NpcDamageNpcEvent>();
+        
+				// (todo)
+//				if(isVictimPed) 						DispatchDamageEvent<PedDamagedEvent, PedDeadEvent>();
+				if(isVictimPlayer) 						DispatchDamageEvent<PlayerDamagedEvent, PlayerDeadEvent>();
+				if(isVictimThisPlayer) 					DispatchDamageEvent<ThisPlayerDamagedEvent, ThisPlayerDeadEvent>();
+				if(isVictimNpc) 						DispatchDamageEvent<NpcDamagedEvent, NpcDeadEvent>();
 			}
 		},
 
