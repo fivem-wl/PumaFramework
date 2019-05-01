@@ -45,7 +45,7 @@ public class GameEventDispatcher
 	}
 
 
-	private static readonly IDictionary<string, Action<EventManager, IList<dynamic>>> GameEventDispatchers = new Dictionary<string, Action<EventManager, IList<dynamic>>>()
+	static readonly IDictionary<string, Action<EventManager, IList<dynamic>>> GameEventDispatchers = new Dictionary<string, Action<EventManager, IList<dynamic>>>()
 	{
 		{
 			"CEventNetworkEntityDamage",
@@ -67,18 +67,20 @@ public class GameEventDispatcher
 				{
 					var isAttackerPed = damageEvent.Attacker is Ped;
 					var isAttackerPlayer = isAttackerPed && ((Ped) damageEvent.Attacker).IsPlayer;
+					var isAttackerNpc = isAttackerPed && !isAttackerPlayer;
 					var isVictimPed = damageEvent.Victim is Ped;
 					var isVictimPlayer = isVictimPed && ((Ped) damageEvent.Victim).IsPlayer;
 					var isVictimThisPlayer = isVictimPlayer && (damageEvent.Victim.ToPlayer() == Game.Player);
+					var isVictimNpc = isVictimPed && !isVictimPlayer;
 					
 					if (isAttackerPlayer && isVictimPlayer)	m.DispatchEvent(new PlayerKillPlayerEvent(damageEvent));
-					else if (isAttackerPlayer && isVictimPed)	m.DispatchEvent(new PlayerKillPedEvent(damageEvent));
-					else if (isAttackerPed && isVictimPlayer)	m.DispatchEvent(new PedKillPlayerEvent(damageEvent));
-					else if (isVictimPed && isAttackerPed)		m.DispatchEvent(new PedKillPedEvent(damageEvent));
-					else										m.DispatchEvent(new EntityKillEntityEvent(damageEvent));
+					if (isAttackerPlayer && isVictimNpc)	m.DispatchEvent(new PlayerKillNpcEvent(damageEvent));
+					if (isAttackerNpc && isVictimPlayer)	m.DispatchEvent(new NpcKillPlayerEvent(damageEvent));
+					if (isAttackerNpc && isVictimNpc)		m.DispatchEvent(new NpcKillNpcEvent(damageEvent));
 
 					if (isVictimPlayer) m.DispatchEvent(new PlayerDeadEvent(damageEvent));
 					if (isVictimThisPlayer) m.DispatchEvent(new ThisPlayerDeadEvent(damageEvent));
+					if (isVictimPed && !isVictimPlayer) m.DispatchEvent(new NpcDeadEvent(damageEvent));
 				}
 				// More specific damage events to dispatch (todo)
 				else

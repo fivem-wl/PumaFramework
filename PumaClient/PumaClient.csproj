@@ -54,7 +54,6 @@
     <Compile Include="ClientEventDispatcher.cs" />
     <Compile Include="Event\ClientMapStartEvent.cs" />
     <Compile Include="Event\Game\EntityDamageSubEvent.cs" />
-    <Compile Include="Event\Game\EntityKillEntityEvent.cs" />
     <Compile Include="Event\Game\GameEvent.cs" />
     <Compile Include="Event\Game\NetworkAttemptHostMigrationEvent.cs" />
     <Compile Include="Event\Game\NetworkEntityDamageEvent.cs" />
@@ -67,10 +66,11 @@
     <Compile Include="Event\Game\NetworkStartMatchEvent.cs" />
     <Compile Include="Event\Game\NetworkStartSessionEvent.cs" />
     <Compile Include="Event\Game\NetworkVehicleUndrivableEvent.cs" />
-    <Compile Include="Event\Game\PedKillPedEvent.cs" />
-    <Compile Include="Event\Game\PedKillPlayerEvent.cs" />
+    <Compile Include="Event\Game\NpcDeadEvent.cs" />
+    <Compile Include="Event\Game\NpcKillNpcEvent.cs" />
+    <Compile Include="Event\Game\NpcKillPlayerEvent.cs" />
     <Compile Include="Event\Game\PlayerDeadEvent.cs" />
-    <Compile Include="Event\Game\PlayerKillPedEvent.cs" />
+    <Compile Include="Event\Game\PlayerKillNpcEvent.cs" />
     <Compile Include="Event\Game\PlayerKillPlayerEvent.cs" />
     <Compile Include="Event\Game\ThisPlayerDeadEvent.cs" />
     <Compile Include="Event\Script\ScriptEvent.cs" />
