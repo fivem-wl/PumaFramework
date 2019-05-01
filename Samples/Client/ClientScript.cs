@@ -39,7 +39,7 @@ public class ClientScript : PumaScript
 	}
 	
 	[PumaEventHandler]
-	void OnClientMapStrat(ClientMapStartEvent @event)
+	void OnClientMapStart(ClientMapStartEvent @event)
 	{
 		Debug.WriteLine($"[ClientMapStartEvent]{@event.ResourceName}");
 		Exports["spawnmanager"].setAutoSpawn(true);
