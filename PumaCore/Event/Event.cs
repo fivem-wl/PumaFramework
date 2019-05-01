@@ -19,10 +19,7 @@ namespace PumaFramework.Core.Event {
 
 public abstract class Event
 {
-	public override int GetHashCode()
-	{
-		return base.GetHashCode();
-	}
+	
 }
 
 }
