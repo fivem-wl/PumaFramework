@@ -72,6 +72,7 @@
     <Compile Include="Event\Game\PlayerDeadEvent.cs" />
     <Compile Include="Event\Game\PlayerKillPedEvent.cs" />
     <Compile Include="Event\Game\PlayerKillPlayerEvent.cs" />
+    <Compile Include="Event\Game\ThisPlayerDeadEvent.cs" />
     <Compile Include="Event\Script\ScriptEvent.cs" />
     <Compile Include="Event\Script\ThisPlayerSpawnedEvent.cs" />
     <Compile Include="GameEventDispatcher.cs" />

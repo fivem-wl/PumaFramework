@@ -77,7 +77,8 @@ public class GameEventDispatcher
 					else if (isVictimPed && isAttackerPed)		m.DispatchEvent(new PedKillPedEvent(damageEvent));
 					else										m.DispatchEvent(new EntityKillEntityEvent(damageEvent));
 
-					if (isVictimThisPlayer) m.DispatchEvent(new PlayerDeadEvent(damageEvent));
+					if (isVictimPlayer) m.DispatchEvent(new PlayerDeadEvent(damageEvent));
+					if (isVictimThisPlayer) m.DispatchEvent(new ThisPlayerDeadEvent(damageEvent));
 				}
 				// More specific damage events to dispatch (todo)
 				else
