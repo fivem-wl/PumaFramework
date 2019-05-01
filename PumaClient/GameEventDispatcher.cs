@@ -44,7 +44,6 @@ public class GameEventDispatcher
 		dispatcher.Invoke(_eventManager, args);
 	}
 
-
 	static readonly IDictionary<string, Action<EventManager, IList<dynamic>>> GameEventDispatchers = new Dictionary<string, Action<EventManager, IList<dynamic>>>()
 	{
 		{
@@ -62,32 +61,37 @@ public class GameEventDispatcher
 				);
 				m.DispatchEvent(damageEvent);
 
-				// More specific fatal events to dispatch
+				// More specific (fatal) events to dispatch (todo)
+				var isAttackerPed = damageEvent.Attacker is Ped;
+				var isAttackerPlayer = isAttackerPed && ((Ped) damageEvent.Attacker).IsPlayer;
+				var isAttackerNpc = isAttackerPed && !isAttackerPlayer;
+				var isVictimPed = damageEvent.Victim is Ped;
+				var isVictimPlayer = isVictimPed && ((Ped) damageEvent.Victim).IsPlayer;
+				var isVictimThisPlayer = isVictimPlayer && (damageEvent.Victim.ToPlayer() == Game.Player);
+				var isVictimNpc = isVictimPed && !isVictimPlayer;
+
 				if (damageEvent.IsFatal)
 				{
-					var isAttackerPed = damageEvent.Attacker is Ped;
-					var isAttackerPlayer = isAttackerPed && ((Ped) damageEvent.Attacker).IsPlayer;
-					var isAttackerNpc = isAttackerPed && !isAttackerPlayer;
-					var isVictimPed = damageEvent.Victim is Ped;
-					var isVictimPlayer = isVictimPed && ((Ped) damageEvent.Victim).IsPlayer;
-					var isVictimThisPlayer = isVictimPlayer && (damageEvent.Victim.ToPlayer() == Game.Player);
-					var isVictimNpc = isVictimPed && !isVictimPlayer;
-					
-					if (isAttackerPlayer && isVictimPlayer)	m.DispatchEvent(new PlayerKillPlayerEvent(damageEvent));
-					if (isAttackerPlayer && isVictimNpc)	m.DispatchEvent(new PlayerKillNpcEvent(damageEvent));
-					if (isAttackerNpc && isVictimPlayer)	m.DispatchEvent(new NpcKillPlayerEvent(damageEvent));
-					if (isAttackerNpc && isVictimNpc)		m.DispatchEvent(new NpcKillNpcEvent(damageEvent));
+					if (isAttackerPlayer && isVictimPlayer)	m.DispatchEvent(new PlayerDamagePlayerEvent(damageEvent));
+					if (isAttackerPlayer && isVictimNpc)	m.DispatchEvent(new PlayerDamageNpcEvent(damageEvent));
+					if (isAttackerNpc && isVictimPlayer)	m.DispatchEvent(new NpcDamagePlayerEvent(damageEvent));
+					if (isAttackerNpc && isVictimNpc)		m.DispatchEvent(new NpcDamageNpcEvent(damageEvent));
 
-					if (isVictimPlayer) m.DispatchEvent(new PlayerDeadEvent(damageEvent));
-					if (isVictimThisPlayer) m.DispatchEvent(new ThisPlayerDeadEvent(damageEvent));
-					if (isVictimPed && !isVictimPlayer) m.DispatchEvent(new NpcDeadEvent(damageEvent));
+					if (isVictimPlayer) 	m.DispatchEvent(new PlayerDamagedEvent(damageEvent));
+					if (isVictimThisPlayer) m.DispatchEvent(new ThisPlayerDamagedEvent(damageEvent));
+					if (isVictimNpc) 		m.DispatchEvent(new NpcDamagedEvent(damageEvent));
 				}
-				// More specific damage events to dispatch (todo)
 				else
 				{
+					if (isAttackerPlayer && isVictimPlayer)	m.DispatchEvent(new PlayerKillPlayerEvent(damageEvent), typeof(PlayerKillPlayerEvent), typeof(PlayerDamagePlayerEvent));
+					if (isAttackerPlayer && isVictimNpc)	m.DispatchEvent(new PlayerKillNpcEvent(damageEvent), typeof(PlayerKillNpcEvent), typeof(PlayerDamageNpcEvent));
+					if (isAttackerNpc && isVictimPlayer)	m.DispatchEvent(new NpcKillPlayerEvent(damageEvent), typeof(NpcKillPlayerEvent), typeof(NpcDamagePlayerEvent));
+					if (isAttackerNpc && isVictimNpc)		m.DispatchEvent(new NpcKillNpcEvent(damageEvent), typeof(NpcKillNpcEvent), typeof(NpcDamageNpcEvent));
 
+					if (isVictimPlayer) 	m.DispatchEvent(new PlayerDeadEvent(damageEvent), typeof(PlayerDeadEvent), typeof(PlayerDamagedEvent));
+					if (isVictimThisPlayer) m.DispatchEvent(new ThisPlayerDeadEvent(damageEvent), typeof(ThisPlayerDeadEvent), typeof(NpcDamagedEvent));
+					if (isVictimNpc) 		m.DispatchEvent(new NpcDeadEvent(damageEvent), typeof(NpcDeadEvent), typeof(NpcDamagedEvent));
 				}
-
 				
 			}
 		},

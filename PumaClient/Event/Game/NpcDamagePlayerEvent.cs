@@ -1,4 +1,4 @@
-/*
+﻿/*
  * This file is part of PumaFramework.
  *
  * PumaFramework is free software: you can redistribute it and/or modify
@@ -19,12 +19,17 @@ using CitizenFX.Core;
 
 namespace PumaFramework.Client.Event.Game {
 
-public class PlayerKillNpcEvent : PlayerDamageNpcEvent
+public class NpcDamagePlayerEvent : EntityDamageSubEvent
 {
-	public PlayerKillNpcEvent(NetworkEntityDamageEvent source) : base(source)
+	public readonly Player Victim;
+
+
+	public NpcDamagePlayerEvent(NetworkEntityDamageEvent source) : base(source)
 	{
-		
+		Victim = source.Victim.ToPlayer();
 	}
+
+	public Ped Attacker => SourceEvent.Attacker as Ped;
 }
 
 }
