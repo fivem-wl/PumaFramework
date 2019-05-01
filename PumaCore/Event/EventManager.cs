@@ -79,10 +79,9 @@ public class EventManager
 		success &= _objectEventHandlers.Remove(obj);
 		return success;
 	}
-
-	public void DispatchEvent(Event @event)
+	
+	void DispatchEvent(Type eventType, Event @event)
 	{
-		var eventType = @event.GetType();
 		if (!_eventHandlers.TryGetValue(eventType, out var handlers)) return;
 
 		var isInterruptable = @event is IInterruptable;
@@ -91,6 +90,16 @@ public class EventManager
 			if (isInterruptable && (@event as IInterruptable).IsInterrupted()) return;
 			handler.Handle(@event);
 		}
+	}
+	
+	public void DispatchEvent(Event @event)
+	{
+		DispatchEvent(@event.GetType(), @event);
+	}
+	
+	public void DispatchEvent(Event @event, params Type[] types)
+	{
+		foreach (var type in types) DispatchEvent(type, @event);
 	}
 }
 
