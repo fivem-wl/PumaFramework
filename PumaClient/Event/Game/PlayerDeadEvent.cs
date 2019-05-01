@@ -1,4 +1,4 @@
-/*
+﻿/*
  * This file is part of PumaFramework.
  *
  * PumaFramework is free software: you can redistribute it and/or modify
@@ -14,8 +14,6 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with PumaFramework.  If not, see <https://www.gnu.org/licenses/>.
  */
-
-using CitizenFX.Core;
 
 namespace PumaFramework.Client.Event.Game {
 

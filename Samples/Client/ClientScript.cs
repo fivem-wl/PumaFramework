@@ -15,7 +15,6 @@
  * along with PumaFramework.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-using System;
 using CitizenFX.Core;
 using PumaFramework.Client.Event;
 using PumaFramework.Client.Event.Game;
@@ -62,9 +61,9 @@ public class ClientScript : PumaScript
 	}
 
 	[PumaEventHandler]
-	void OnPlayerKillPed(PlayerKillPedEvent @event)
+	void OnPlayerKillNpc(PlayerKillNpcEvent @event)
 	{
-		Debug.WriteLine($"[OnPlayerKillPed]{@event.Attacker.Handle}, {@event.Victim.Handle}, " +
+		Debug.WriteLine($"[OnPlayerKillNpc]{@event.Attacker.Handle}, {@event.Victim.Handle}, " +
 		                $"{@event.WeaponInfoHash}, {@event.IsMelee}, {@event.DamageType}");
 	}
 

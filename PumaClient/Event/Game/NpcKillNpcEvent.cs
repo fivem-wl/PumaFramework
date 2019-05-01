@@ -15,8 +15,6 @@
  * along with PumaFramework.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-using CitizenFX.Core;
-
 namespace PumaFramework.Client.Event.Game {
 
 public class NpcKillNpcEvent : NpcDamageNpcEvent
