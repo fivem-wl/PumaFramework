@@ -22,7 +22,7 @@ namespace PumaFramework.Client.Event.Game {
 /// <summary>
 ///     NetworkVehicleUndrivableEvent
 /// </summary>
-internal class NetworkVehicleUndrivableEvent : GameEvent
+class NetworkVehicleUndrivableEvent : GameEvent
 {
 	public readonly Entity Attacker;
 	public readonly Vehicle Vehicle;

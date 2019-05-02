@@ -77,17 +77,17 @@ public class GameEventDispatcher
 				}
 
 				// (todo)
-//				if(isAttackerPed && isVictimPed) 		DispatchDamageEvent<PedDamagePedEvent, PedKillPedEvent>();
-				if(isAttackerPlayer && isVictimPlayer) 	DispatchDamageEvent<PlayerDamagePlayerEvent, PlayerKillPlayerEvent>();
-				if(isAttackerPlayer && isVictimNpc) 	DispatchDamageEvent<PlayerDamageNpcEvent, PlayerDamageNpcEvent>();
-				if(isAttackerNpc && isVictimPlayer) 	DispatchDamageEvent<NpcDamagePlayerEvent, NpcDamagePlayerEvent>();
-				if(isAttackerNpc && isVictimNpc) 		DispatchDamageEvent<NpcDamageNpcEvent, NpcDamageNpcEvent>();
-        
+//				if (isAttackerPed && isVictimPed) 		DispatchDamageEvent<PedDamagePedEvent, PedKillPedEvent>();
+				if (isAttackerPlayer && isVictimPlayer) DispatchDamageEvent<PlayerDamagePlayerEvent, PlayerKillPlayerEvent>();
+				if (isAttackerPlayer && isVictimNpc) 	DispatchDamageEvent<PlayerDamageNpcEvent, PlayerDamageNpcEvent>();
+				if (isAttackerNpc && isVictimPlayer) 	DispatchDamageEvent<NpcDamagePlayerEvent, NpcDamagePlayerEvent>();
+				if (isAttackerNpc && isVictimNpc) 		DispatchDamageEvent<NpcDamageNpcEvent, NpcDamageNpcEvent>();
+
 				// (todo)
-//				if(isVictimPed) 						DispatchDamageEvent<PedDamagedEvent, PedDeadEvent>();
-				if(isVictimPlayer) 						DispatchDamageEvent<PlayerDamagedEvent, PlayerDeadEvent>();
-				if(isVictimThisPlayer) 					DispatchDamageEvent<ThisPlayerDamagedEvent, ThisPlayerDeadEvent>();
-				if(isVictimNpc) 						DispatchDamageEvent<NpcDamagedEvent, NpcDeadEvent>();
+//				if (isVictimPed) 						DispatchDamageEvent<PedDamagedEvent, PedDeadEvent>();
+				if (isVictimPlayer) 					DispatchDamageEvent<PlayerDamagedEvent, PlayerDeadEvent>();
+				if (isVictimThisPlayer) 				DispatchDamageEvent<ThisPlayerDamagedEvent, ThisPlayerDeadEvent>();
+				if (isVictimNpc) 						DispatchDamageEvent<NpcDamagedEvent, NpcDeadEvent>();
 			}
 		},
 

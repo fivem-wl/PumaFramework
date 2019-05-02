@@ -54,9 +54,9 @@ class ClientEventDispatcher
 	[EventHandler("playerSpawned")]
 	void OnThisPlayerSpawn(dynamic spawnObject)
 	{
-		var model = (PedHash)spawnObject.model;
-		var position = new Vector3((float)spawnObject.x, (float)spawnObject.y, (float)spawnObject.z);
-		var heading = (float)spawnObject.heading;
+		var model = (PedHash) spawnObject.model;
+		var position = new Vector3((float) spawnObject.x, (float) spawnObject.y, (float) spawnObject.z);
+		var heading = (float) spawnObject.heading;
 		_eventManager.DispatchEvent(new ThisPlayerSpawnedEvent(model, position, heading));
 	}
 }

@@ -21,7 +21,7 @@ namespace PumaFramework.Client.Event.Game {
 ///     todo
 ///     CEventNetworkHostMigration (1185028433, 1)
 /// </summary>
-internal class NetworkHostMigrationEvent : GameEvent
+class NetworkHostMigrationEvent : GameEvent
 {
 }
 
