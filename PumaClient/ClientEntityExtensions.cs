@@ -28,7 +28,7 @@ public static class ClientEntityExtensions
 	/// <param name="entity"></param>
 	/// <returns><seealso cref="Player"/> if converted successfully; otherwise, null.</returns>
 	public static Player ToPlayer(this Entity entity)
-		=> entity is Ped ? new Player(API.NetworkGetPlayerIndexFromPed(entity.Handle)) : null;
+		=> (entity is Ped) ? new Player(API.NetworkGetPlayerIndexFromPed(entity.Handle)) : null;
 
 	/// <summary>
 	///	Try convert <seealso cref="Entity"/> to <seealso cref="Player"/>.
