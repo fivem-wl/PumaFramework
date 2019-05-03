@@ -25,7 +25,7 @@ using PumaFramework.Core;
 
 namespace PumaFramework.Shared {
 
-public static class EventHandlerUtils
+public static class FxEventHandlerUtils
 {
 	public static IEnumerable<Delegate> RegisterEventHandlers(EventHandlerDictionary handlerDictionary, object obj)
 	{

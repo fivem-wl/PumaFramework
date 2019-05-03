@@ -44,10 +44,10 @@ public abstract class PumaScript : BaseScript
 		RootResolver.RegisterReference<EventManager>(EventManager);
 
 		#if SERVER
-			EventHandlerUtils.RegisterEventHandlers(EventHandlers, new ServerEventDispatcher(EventManager));
+			FxEventHandlerUtils.RegisterEventHandlers(EventHandlers, new ServerEventDispatcher(EventManager));
 		#elif CLIENT
-			EventHandlerUtils.RegisterEventHandlers(EventHandlers, new ClientEventDispatcher(EventManager));
-			EventHandlerUtils.RegisterEventHandlers(EventHandlers, new GameEventDispatcher(EventManager));
+			FxEventHandlerUtils.RegisterEventHandlers(EventHandlers, new ClientEventDispatcher(EventManager));
+			FxEventHandlerUtils.RegisterEventHandlers(EventHandlers, new GameEventDispatcher(EventManager));
 		#endif
 
 		EventManager.RegisterEventHandlers(this);
