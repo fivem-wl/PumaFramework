@@ -41,6 +41,10 @@
       <HintPath>..\Deps\System.ValueTuple.dll</HintPath>
     </Reference>
     <Reference Include="System.Xml" />
+    <Reference Include="YamlDotNet, Version=6.0.0.0, Culture=neutral, PublicKeyToken=ec19458f3c15af5e">
+      <HintPath>..\packages\YamlDotNet.6.0.0\lib\net45\YamlDotNet.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Container\BindAttribute.cs" />
@@ -48,6 +52,7 @@
     <Compile Include="Container\CompoundKeyUtils.cs" />
     <Compile Include="Container\Container.cs" />
     <Compile Include="Container\ContainerExtensions.cs" />
+    <Compile Include="Container\FenceAttribute.cs" />
     <Compile Include="Container\RequireAttribute.cs" />
     <Compile Include="Container\IComponent.cs" />
     <Compile Include="Container\IContainer.cs" />
@@ -64,6 +69,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Service\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

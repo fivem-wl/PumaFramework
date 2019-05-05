@@ -28,19 +28,26 @@ using ResolveBinding = ValueTuple<IEnumerable<Type>, Func<object, IComponent>>;
 public class Resolver : IResolver
 {
 	public IResolver Parent { get; }
-	
+
+	public bool Fenced { get; }
+
 	readonly IDictionary<object, object> _refs = new Dictionary<object, object>();
 
 	
-	public Resolver(IResolver parent = null)
+	public Resolver(IResolver parent = null) : this(parent, false) { }
+	
+	public Resolver(IResolver parent, bool fenced)
 	{
 		Parent = parent;
+		Fenced = fenced;
 	}
 	
 	public Container ConstructContainer(Type clazz)
 	{
+		bool fenced = clazz.GetCustomAttribute<FenceAttribute>() != null;
+		
 		var container = Activator.CreateInstance(clazz) as Container;
-		container.Resolver = new Resolver(this);
+		container.Resolver = new Resolver(this, fenced);
 		
 		foreach (BindAttribute attr in clazz.GetCustomAttributes(typeof(BindAttribute), true))
 		{

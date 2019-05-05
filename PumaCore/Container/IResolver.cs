@@ -22,7 +22,9 @@ namespace PumaFramework.Core.Container {
 public interface IResolver
 {
 	IResolver Parent { get; }
-	
+
+	bool Fenced { get; }
+
 	Container ConstructContainer(Type clazz);
 	
 	void RegisterReferenceRaw(object obj, object key = null, params Type[] types);
