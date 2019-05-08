@@ -49,7 +49,7 @@
     <Compile Include="PlayerComponent.cs" />
     <Compile Include="ServerScript.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ServerService.cs" />
+    <Compile Include="BaseFunctions.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\PumaCore\PumaCore.csproj">

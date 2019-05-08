@@ -24,15 +24,17 @@ public class PlayerComponent : PlayerLifecycleComponent
 {
 	public PlayerComponent(Player player) : base(player) {}
 
-	
-	public override void Init()
+
+	protected override void Awake()
 	{
+		base.Awake();
 		Debug.WriteLine($"{Player.Name} has joined the server.");
 	}
 
-	public override void Destroy()
+	protected override void Destroy()
 	{
 		Debug.WriteLine($"{Player.Name} left the server.");
+		base.Destroy();
 	}
 }
 

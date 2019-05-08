@@ -1,4 +1,4 @@
-﻿/*
+/*
  * This file is part of PumaFramework.
  *
  * PumaFramework is free software: you can redistribute it and/or modify
@@ -15,29 +15,17 @@
  * along with PumaFramework.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-using CitizenFX.Core;
-using PumaFramework.Shared;
+using PumaFramework.Core.Container;
+using PumaFramework.Server;
 using PumaFramework.Shared.Feature;
 
 namespace Server {
 
-[Feature(typeof(BaseFunctions))]
-public class ServerScript : PumaScript
+[ChildComponent(typeof(PlayerLifecycleManager))]
+[PlayerLifecycleComponent(typeof(PlayerComponent))]
+public class BaseFunctions : Feature
 {
-	public ServerScript()
-	{
-		
-	}
 
-	protected override void OnStart()
-	{
-		Debug.WriteLine($"{GetType().FullName} loaded.");
-	}
-	
-	protected override void OnStop()
-	{
-		
-	}
 }
 
 }
