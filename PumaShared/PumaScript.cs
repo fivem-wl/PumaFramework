@@ -30,18 +30,21 @@ namespace PumaFramework.Shared {
 
 public abstract class PumaScript : BaseScript
 {
-	public new PlayerList Players => base.Players;
-	
-	public readonly Resolver RootResolver = new Resolver();
+	public readonly FeatureContainer FeatureContainer;
 	
 	public readonly EventManager EventManager = new EventManager();
 
 
 	protected PumaScript()
 	{
-		RootResolver.RegisterReference<PumaScript>(this);
-		RootResolver.RegisterReference<EventHandlerDictionary>(EventHandlers);
-		RootResolver.RegisterReference<EventManager>(EventManager);
+		FeatureContainer = new FeatureContainer(this);
+		
+		FeatureContainer.RegisterReference<EventHandlerDictionary>(EventHandlers);
+		FeatureContainer.RegisterReference<PlayerList>(Players);
+		
+		FeatureContainer.RegisterReference<PumaScript>(this);
+		FeatureContainer.RegisterReference<FeatureContainer>(FeatureContainer);
+		FeatureContainer.RegisterReference<EventManager>(EventManager);
 
 		#if SERVER
 			FxEventHandlerUtils.RegisterEventHandlers(EventHandlers, new ServerEventDispatcher(EventManager));
@@ -49,7 +52,7 @@ public abstract class PumaScript : BaseScript
 			FxEventHandlerUtils.RegisterEventHandlers(EventHandlers, new ClientEventDispatcher(EventManager));
 			FxEventHandlerUtils.RegisterEventHandlers(EventHandlers, new GameEventDispatcher(EventManager));
 		#endif
-
+		
 		EventManager.RegisterEventHandlers(this);
 	}
 	

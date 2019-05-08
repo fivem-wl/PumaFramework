@@ -24,7 +24,7 @@ public static class CompoundKeyUtils
 	public static object CompoundKey(Type type, object key = null) =>
 		(key == null) ? type : (object) new ValueTuple<Type, object>(type, key);
 	
-	public static object CompoundKey<T>(object key = null) where T : class, IComponent =>
+	public static object CompoundKey<T>(object key = null) where T : class =>
 		CompoundKey(typeof(T), key);
 
 	public static bool IsCompoundKey(object key) =>

@@ -18,30 +18,30 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
-using PumaFramework.Core.Container;
 using PumaFramework.Core.Event;
 using PumaFramework.Server.Event;
+using PumaFramework.Shared;
 
 namespace PumaFramework.Server {
 
-public class PlayerLifecycleManager : Component
+public class PlayerLifecycleManager : PumaComponent
 {
 	readonly ISet<Type> _componentTypes = new HashSet<Type>();
-	
-	
-	public override void Init()
+
+
+	protected override void Start()
 	{
-		foreach (PlayerLifecycleComponentAttribute attr in Owner.GetType().GetCustomAttributes(typeof(PlayerLifecycleComponentAttribute)))
+		foreach (var attr in Parent.GetType().GetCustomAttributes<PlayerLifecycleComponentAttribute>())
 		{
 			_componentTypes.Add(attr.Type);
 		}
 	}
 
-	public override void Destroy()
+	protected override void Destroy()
 	{
 		foreach (var type in _componentTypes)
 		{
-			Owner.RemoveComponents(type);
+			Parent.RemoveComponents(type);
 		}
 	}
 	
@@ -50,7 +50,7 @@ public class PlayerLifecycleManager : Component
 	{
 		foreach (var type in _componentTypes)
 		{
-			Owner.AddComponent(type, @event.Player);
+			Parent.AddComponent(type, @event.Player);
 		}
 	}
 	
@@ -59,7 +59,7 @@ public class PlayerLifecycleManager : Component
 	{
 		foreach (var type in _componentTypes)
 		{
-			Owner.RemoveComponent(type, @event.Player);
+			Parent.RemoveComponent(type, @event.Player);
 		}
 	}
 }

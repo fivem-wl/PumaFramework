@@ -20,14 +20,14 @@ using System;
 namespace PumaFramework.Core.Container {
 
 [AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
-public class BindAttribute : Attribute
+public class ChildComponentAttribute : Attribute
 {
 	public readonly Type Implementation;
 
-	public Type[] To { get; set; }
+	public Type[] BindTo { get; set; }
 	
 	
-	public BindAttribute(Type impl)
+	public ChildComponentAttribute(Type impl)
 	{
 		Implementation = impl;
 	}

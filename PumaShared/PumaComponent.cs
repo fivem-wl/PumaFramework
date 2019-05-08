@@ -17,28 +17,29 @@
 
 using System;
 using System.Collections.Generic;
+using PumaFramework.Core;
 using PumaFramework.Core.Container;
 using PumaFramework.Core.Event;
 
 namespace PumaFramework.Shared {
 
-public class PumaContainer : Container
+public class PumaComponent : Component
 {
 	EventManager _eventManager;
 	
 	
-	public override void Init()
+	protected override void Start()
 	{
-		_eventManager = Resolver.ResolveReference<EventManager>();
-		//Trace.Assert(_eventManager != null);
+		_eventManager = this.Get<EventManager>();
+		Trace.Assert(_eventManager != null);
 
-		base.Init();
+		base.Start();
 
 		_eventManager.RegisterEventHandlers(this);
 		foreach (var component in GetComponents()) _eventManager.RegisterEventHandlers(component);
 	}
 
-	public override void Destroy()
+	protected override void Destroy()
 	{
 		foreach (var component in GetComponents()) _eventManager.UnregisterEventHandlers(component);
 		_eventManager.UnregisterEventHandlers(this);
@@ -46,7 +47,7 @@ public class PumaContainer : Container
 		base.Destroy();
 	}
 
-	public override IComponent AddComponent(Type type, object key = null, IEnumerable<Type> bindTo = null)
+	public override Component AddComponent(Type type, object key = null, IEnumerable<Type> bindTo = null)
 	{
 		var component = base.AddComponent(type, key, bindTo);
 		_eventManager.RegisterEventHandlers(component);
@@ -55,7 +56,7 @@ public class PumaContainer : Container
 
 	public override bool RemoveComponent(Type type, object key = null)
 	{
-		var component = GetComponent(type, key);
+		var component = Get(type, key);
 		if (component == null) return false;
 		
 		_eventManager.UnregisterEventHandlers(component);

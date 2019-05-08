@@ -20,14 +20,14 @@ using System;
 namespace PumaFramework.Core.Container {
 
 [AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
-public class RequireAttribute : Attribute
+public class RequiredAttribute : Attribute
 {
-	public readonly Type Component;
+	public readonly Type ObjectType;
 
 
-	public RequireAttribute(Type component)
+	public RequiredAttribute(Type objectType)
 	{
-		Component = component;
+		ObjectType = objectType;
 	}
 }
 

@@ -20,6 +20,7 @@ using PumaFramework.Core.Container;
 
 namespace PumaFramework.Server {
 
+[Required(typeof(PlayerLifecycleManager))]
 public class PlayerLifecycleComponent : Component
 {
 	public readonly Player Player;

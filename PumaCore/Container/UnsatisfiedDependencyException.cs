@@ -15,17 +15,19 @@
  * along with PumaFramework.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-using PumaFramework.Core.Container;
-using PumaFramework.Server;
-using PumaFramework.Shared;
+using System;
 
-namespace Server {
+namespace PumaFramework.Core.Container {
 
-[Bind(typeof(PlayerLifecycleManager))]
-[PlayerLifecycleComponent(typeof(PlayerComponent))]
-public class ServerService : PumaContainer
+public class UnsatisfiedDependencyException : Exception
 {
+	public readonly Type dependentType;
 	
+	
+	public UnsatisfiedDependencyException(Type dependentType)
+	{
+		this.dependentType = dependentType;
+	}
 }
 
 }
