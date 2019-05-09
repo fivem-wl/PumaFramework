@@ -24,6 +24,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Resource", "Resource", "{5F
 		Samples\Resource\__resource.lua = Samples\Resource\__resource.lua
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ThirdParty", "ThirdParty", "{9EBD9AF9-6AA5-4417-BAB3-3794E6B30F89}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.Experimental.Collections", "ThirdParty\Microsoft.Experimental.Collections\Microsoft.Experimental.Collections.csproj", "{E9F6756F-7C0B-454B-8AA8-993720FC8E25}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		PumaShared\PumaShared.projitems*{4bc0df0a-ed3b-4532-bafa-cc78600f31c9}*SharedItemsImports = 13
@@ -55,6 +59,10 @@ Global
 		{CD26544A-1D58-479A-9769-2F8DD57CDDEF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CD26544A-1D58-479A-9769-2F8DD57CDDEF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CD26544A-1D58-479A-9769-2F8DD57CDDEF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E9F6756F-7C0B-454B-8AA8-993720FC8E25}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E9F6756F-7C0B-454B-8AA8-993720FC8E25}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E9F6756F-7C0B-454B-8AA8-993720FC8E25}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E9F6756F-7C0B-454B-8AA8-993720FC8E25}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -67,6 +75,7 @@ Global
 		{C8422855-640F-47DC-8B97-3E6DCE117554} = {734F5297-F058-43B3-9990-01087EB5A008}
 		{CD26544A-1D58-479A-9769-2F8DD57CDDEF} = {734F5297-F058-43B3-9990-01087EB5A008}
 		{5FA321C2-9CE4-4E03-9ED8-1246E2FF32CB} = {734F5297-F058-43B3-9990-01087EB5A008}
+		{E9F6756F-7C0B-454B-8AA8-993720FC8E25} = {9EBD9AF9-6AA5-4417-BAB3-3794E6B30F89}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DE481C97-02F0-48A8-8566-FD76209E5594}
