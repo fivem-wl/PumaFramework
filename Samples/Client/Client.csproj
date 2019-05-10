@@ -24,12 +24,13 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
+    <DebugType>full</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>..\Dist\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="CitizenFX.Core.Client, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
@@ -70,7 +71,9 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>copy /Y "$(ProjectDir)\..\Resource\*" "$(TargetDir)\"
-del "$(TargetDir)\CitizenFX.Core.*" /q</PostBuildEvent>
+    <PostBuildEvent>copy /Y "$(ProjectDir)..\Resource\*" "$(TargetDir)\"
+del "$(TargetDir)CitizenFX.Core.*" /q
+for %25%25f in ("$(TargetDir)Puma*.dll") do pdb2mdb %25%25f
+for %25%25f in ("$(TargetDir)*.net.dll") do pdb2mdb %25%25f</PostBuildEvent>
   </PropertyGroup>
 </Project>
