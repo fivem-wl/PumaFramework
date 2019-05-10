@@ -19,19 +19,21 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using Microsoft.Collections.Extensions;
 using static PumaFramework.Core.Container.CompoundKeyUtils;
 
 namespace PumaFramework.Core.Container {
 
 public abstract class Component
 {
+	[Flags]
 	enum RegisterType
 	{
-		Component,
-		Reference,
-		External
+		Component	= 1,
+		Reference	= 2,
+		External	= 4,
 	}
-	
+
 	class RegisterEntry
 	{
 		internal readonly RegisterType Type;
@@ -49,7 +51,7 @@ public abstract class Component
 
 	public bool Fenced { get; }
 
-	readonly IDictionary<object, RegisterEntry> _refs = new Dictionary<object, RegisterEntry>();
+	readonly MultiValueDictionary<object, RegisterEntry> _refs = new MultiValueDictionary<object, RegisterEntry>();
 	
 	
 	protected Component()
@@ -96,20 +98,85 @@ public abstract class Component
 	#endregion Lifecycle
 	
 	#region Container
-	
-	void Add(RegisterType registerType, Type type, object obj, object key) =>
-		_refs[CompoundKey(type, key)] = new RegisterEntry(registerType, obj);
+
+	bool Add(RegisterType registerType, Type type, object key, object obj)
+	{
+		var compoundKey = CompoundKey(type, key);
+		if (_refs.TryGetValue(compoundKey, out var entries) &&
+			(entries.Any(e => e.Type == registerType) || entries.Any(e => e.Object == obj))
+		) return false;
+
+		_refs.Add(compoundKey, new RegisterEntry(registerType, obj));
+		return true;
+	}
 
 	bool Remove(RegisterType registerType, Type type, object key)
 	{
 		var compoundKey = CompoundKey(type, key);
-		if (!_refs.TryGetValue(compoundKey, out var entry) || entry.Type != registerType) return false;
-		return _refs.Remove(compoundKey);
+		if (!_refs.TryGetValue(compoundKey, out var entries)) return false;
+
+		var entry = entries.LastOrDefault(e => (e.Type & registerType) != 0);
+		return (entry != null && _refs.Remove(compoundKey, entry));
 	}
 	
-	public object Get(Type type, object key = null) =>
-		_refs.TryGetValue(CompoundKey(type, key), out var obj) ? obj.Object : Parent?.Get(type, key);
+	bool Remove(RegisterType registerType, Type type, object key, object obj)
+	{
+		var compoundKey = CompoundKey(type, key);
+		if (!_refs.TryGetValue(compoundKey, out var entries)) return false;
+
+		var entry = entries.SingleOrDefault(e => ((e.Type & registerType) != 0 && e.Object == obj));
+		return (entry != null && _refs.Remove(compoundKey, entry));
+	}
+
+	bool RemoveAll(RegisterType registerType, Type type, object key)
+	{
+		var compoundKey = CompoundKey(type, key);
+		if (!_refs.TryGetValue(compoundKey, out var entries)) return false;
+		
+		return entries
+			.Where(e => (e.Type & registerType) != 0)
+			.ToList()
+			.Aggregate(false, (current, entry) => current || _refs.Remove(compoundKey, entry));
+	}
 	
+	bool RemoveAll(RegisterType registerType, object obj)
+	{
+		return _refs
+			.SelectMany(e => e.Value
+				.Where(entry => entry.Object == obj)
+				.Select(entry => new ValueTuple<object, RegisterEntry>(e.Key, entry))
+			)
+			.ToList()
+			.Aggregate(false, (current, tuple) => current || _refs.Remove(tuple.Item1, tuple.Item2));
+	}
+
+	object Get(RegisterType registerType, Type type, object key)
+	{
+		var compoundKey = CompoundKey(type, key);
+		if (!_refs.TryGetValue(compoundKey, out var entries)) return null;
+		return entries.SingleOrDefault(e => ((e.Type & registerType) != 0))?.Object;
+	}
+	
+	IList<object> GetAll(RegisterType registerType, Type type)
+	{
+		return _refs
+			.Where(e => GetTypeFromKey(e.Key) == type)
+			.SelectMany(e => e.Value)
+			.Where(e => (e.Type & registerType) != 0)
+			.Select(e => e.Object)
+			.ToList();
+	}
+
+	public object Get(Type type, object key = null) =>
+		_refs.TryGetValue(CompoundKey(type, key), out var entries) ? entries.Last().Object : Parent?.Get(type, key);
+	
+	public IList<object> GetAll(Type type, object key = null)
+	{
+		var objs = (Parent != null ? Parent.GetAll(type, key) : new List<object>());
+		if (!_refs.TryGetValue(CompoundKey(type, key), out var entries)) return objs;
+		return objs.Concat(entries.Select(e => e.Object)).ToList();
+	}
+
 	#endregion Container
 
 	#region Reference
@@ -120,44 +187,37 @@ public abstract class Component
 		foreach (var type in types)
 		{
 			Trace.Assert(type.IsInstanceOfType(obj));
-			Add(RegisterType.Reference, type, obj, key);
+			Add(RegisterType.Reference, type, key, obj);
 		}
 	}
 
 	public bool UnregisterReference(object key = null, params Type[] types) =>
 		types.Aggregate(false, (current, type) => current || Remove(RegisterType.Reference, type, key));
-
+	
 	public bool UnregisterReferences(params Type[] types)
 	{
 		return types.Aggregate(false, (current, type) => current || _refs
-			.Where(e => (e.Value.Type == RegisterType.Reference))
-			.Where(e => (GetTypeFromKey(e.Key) == type))
-			.Aggregate(false, (current_, entry) => (current_ || UnregisterReference(GetObjectFromKey(entry.Key), type)))
+			.Where(e => GetTypeFromKey(e.Key) == type)
+			.SelectMany(e => e.Value
+				.Where(entry => entry.Type == RegisterType.Reference)
+				.Select(entry => new ValueTuple<object, RegisterEntry>(e.Key, entry))
+			)
+			.Aggregate(false, (curr, tuple) => (curr || _refs.Remove(tuple.Item1, tuple.Item2)))
 		);
 	}
-	
-	//public IList<ValueTuple<object, object>> GetAll(Type type)
-	//{
-	//	return _refs
-	//		.Where(e => IsCompoundKey(e.Key) && GetTypeFromKey(e.Key) == type)
-	//		.Select(e => new ValueTuple<object, object>(GetObjectFromKey(e.Key), e.Value.Object))
-	//		.ToList();
-	//}
-//
-	//protected ISet<object> GetAll()
-	//{
-	//	return new HashSet<object>(_refs.Values);
-	//}
-	
+
 	#endregion Reference
 
 	#region Component
 	
-	protected IEnumerable<Component> GetComponents() => _refs
-		.Where(e => e.Value.Type == RegisterType.Component)
-		.Select(e => (Component) e.Value.Object)
-		.ToList();
-	
+	protected IEnumerable<Component> GetComponents()
+	{
+		return _refs
+			.SelectMany(e => e.Value.Where(entry => entry.Type == RegisterType.Component))
+			.Select(e => (Component) e.Object)
+			.ToList();
+	}
+
 	public virtual Component AddComponent(Type type, object key = null, IEnumerable<Type> bindTo = null)
 	{
 		var component = NewComponent(type, key, bindTo);
@@ -172,39 +232,33 @@ public abstract class Component
 		var component = (Component) ((constructor != null) ? constructor.Invoke(new []{key}) : Activator.CreateInstance(clazz));
 		component.Parent = this;
 		
-		Add(RegisterType.Component, clazz, component, key);
+		Add(RegisterType.Component, clazz, key, component);
 		if (bindTo != null)
 		{
-			foreach (var toType in bindTo) Add(RegisterType.Reference, toType, component, key);
+			foreach (var toType in bindTo) Add(RegisterType.Reference, toType, key, component);
 		}
 		return component;
 	}
 
 	public virtual bool RemoveComponent(Type type, object key = null)
 	{
-		_refs.TryGetValue(CompoundKey(type, key), out var entry2);
-		if (!_refs.TryGetValue(CompoundKey(type, key), out var entry) || entry.Type != RegisterType.Component) return false;
-
-		var component = (Component) entry.Object;
+		var component = (Component) Get(RegisterType.Component, type, key);
+		if (component == null) return false;
+		
 		component.Destroy();
-		
-		_refs
-			.Where(e => (e.Value.Object == component))
-			.ToList()
-			.ForEach(e => _refs.Remove(e.Key));
-		
-		return true;
+		return RemoveAll(RegisterType.Component | RegisterType.Reference | RegisterType.External, component);
 	}
 
-	public int RemoveComponents(Type type)
+	public bool RemoveComponents(Type type)
 	{
-		var components = _refs
-			.Where(e => (e.Value.Type == RegisterType.Component))
-			.Where(e => (GetTypeFromKey(e.Key) == type))
-			.ToList();
-		
-		foreach (var entry in components) RemoveComponent(type, GetObjectFromKey(entry.Key));
-		return components.Count;
+		return _refs
+			.Where(e => GetTypeFromKey(e.Key) == type)
+			.SelectMany(e => e.Value
+				.Where(entry => entry.Type == RegisterType.Component)
+				.Select(entry => GetObjectFromKey(e.Key))
+			)
+			.ToList()
+			.Aggregate(false, (current, key) => current || RemoveComponent(type, key));
 	}
 	
 	#endregion Component

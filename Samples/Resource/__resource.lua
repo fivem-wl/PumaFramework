@@ -13,4 +13,5 @@ files {
 	'PumaCore.dll',
 	'PumaClient.dll',
 	'System.ValueTuple.dll',
+	'Microsoft.Experimental.Collections.dll',
 }
