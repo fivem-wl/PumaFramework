@@ -69,8 +69,8 @@
   <PropertyGroup>
     <PostBuildEvent>copy /Y "$(ProjectDir)..\Resource\*" "$(TargetDir)\"
 del "$(TargetDir)CitizenFX.Core.*" /q
-for %25%25f in ("$(TargetDir)Puma*.dll") do pdb2mdb %25%25f
-for %25%25f in ("$(TargetDir)*.net.dll") do pdb2mdb %25%25f</PostBuildEvent>
+for %25%25f in ("$(TargetDir)*.dll") do call pdb2mdb %25%25f
+exit 0</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
          Other similar extension points exist, see Microsoft.Common.targets.

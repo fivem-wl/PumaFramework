@@ -73,7 +73,7 @@
   <PropertyGroup>
     <PostBuildEvent>copy /Y "$(ProjectDir)..\Resource\*" "$(TargetDir)\"
 del "$(TargetDir)CitizenFX.Core.*" /q
-for %25%25f in ("$(TargetDir)Puma*.dll") do pdb2mdb %25%25f
-for %25%25f in ("$(TargetDir)*.net.dll") do pdb2mdb %25%25f</PostBuildEvent>
+for %25%25f in ("$(TargetDir)*.dll") do call pdb2mdb %25%25f
+exit 0</PostBuildEvent>
   </PropertyGroup>
 </Project>
