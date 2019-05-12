@@ -57,6 +57,7 @@
     <Compile Include="Event\PlayerDroppedEvent.cs" />
     <Compile Include="Event\PlayerEvent.cs" />
     <Compile Include="Event\PlayerJoiningEvent.cs" />
+    <Compile Include="PlayerExtensions.cs" />
     <Compile Include="PlayerLifecycleComponent.cs" />
     <Compile Include="PlayerLifecycleComponentAttribute.cs" />
     <Compile Include="PlayerLifecycleManager.cs" />
