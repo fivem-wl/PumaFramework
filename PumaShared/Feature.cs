@@ -17,7 +17,7 @@
 
 using PumaFramework.Core.Container;
 
-namespace PumaFramework.Shared.Feature {
+namespace PumaFramework.Shared {
 
 [Fence]
 public class Feature : PumaComponent

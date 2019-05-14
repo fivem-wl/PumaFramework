@@ -10,8 +10,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)DictExtensions.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Feature\Feature.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Feature\FeatureAttribute.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Feature.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)FxEventHandlerUtils.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Event\ResourceEvent.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Event\ResourceStartEvent.cs" />

@@ -15,12 +15,13 @@
  * along with PumaFramework.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+using System;
+using System.Linq;
 using System.Reflection;
 using CitizenFX.Core;
 using PumaFramework.Core.Container;
 using PumaFramework.Core.Event;
 using PumaFramework.Shared.Event;
-using PumaFramework.Shared.Feature;
 
 namespace PumaFramework.Shared {
 
@@ -36,10 +37,14 @@ public sealed class FeatureContainer : PumaComponent
 		
 		script.EventManager.RegisterEventHandlers(this);
 		
-		foreach (var attr in script.GetType().GetCustomAttributes<FeatureAttribute>())
+		var featureClasses = AppDomain.CurrentDomain.GetAssemblies()
+			.SelectMany(a => a.GetTypes())
+			.Where(t => t.IsSubclassOf(typeof(Feature)));
+		
+		foreach (var clazz in featureClasses)
 		{
-			NewComponent(attr.FeatureType);
-			Debug.WriteLine($"[Puma] Feature {attr.FeatureType} loaded.");
+			NewComponent(clazz);
+			Debug.WriteLine($"[Puma] Feature {clazz} loaded.");
 		}
 	}
 	

@@ -17,7 +17,7 @@
 
 using PumaFramework.Core.Container;
 using PumaFramework.Server;
-using PumaFramework.Shared.Feature;
+using PumaFramework.Shared;
 
 namespace Server {
 

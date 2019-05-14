@@ -17,11 +17,9 @@
 
 using CitizenFX.Core;
 using PumaFramework.Shared;
-using PumaFramework.Shared.Feature;
 
 namespace Server {
 
-[Feature(typeof(BaseFunctions))]
 public class ServerScript : PumaScript
 {
 	public ServerScript()
