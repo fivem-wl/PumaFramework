@@ -19,6 +19,7 @@ using System;
 
 namespace PumaFramework.Server {
 
+[AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
 public class PlayerLifecycleComponentAttribute : Attribute
 {
 	public readonly Type Type;
