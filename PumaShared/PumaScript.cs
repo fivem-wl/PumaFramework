@@ -40,6 +40,7 @@ public abstract class PumaScript : BaseScript
 		FeatureContainer = new FeatureContainer(this);
 		
 		FeatureContainer.RegisterReference<EventHandlerDictionary>(EventHandlers);
+		FeatureContainer.RegisterReference<ExportDictionary>(Exports);
 		FeatureContainer.RegisterReference<PlayerList>(Players);
 		
 		FeatureContainer.RegisterReference<PumaScript>(this);
