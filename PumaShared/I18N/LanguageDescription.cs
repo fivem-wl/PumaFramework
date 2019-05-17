@@ -35,7 +35,66 @@ public struct LanguageDescription
 			Language.ChineseTraditional,
 			new LanguageDescription("zh-tw", "Chinese (Traditional)", "中文（繁體）", Language.English)
 		},
-		// TODO: ...
+		{
+			Language.Russian,
+			new LanguageDescription("ru", "Russian", "Русский", Language.English)
+		},
+		{
+			Language.French,
+			new LanguageDescription("fr", "French", "Français", Language.English)
+		},
+		{
+			Language.German,
+			new LanguageDescription("de", "German", "Deutsch", Language.English)
+		},
+		{
+			Language.Spanish,
+			new LanguageDescription("es", "Spanish", "Español", Language.English)
+		},
+		{
+			Language.Italian,
+			new LanguageDescription("it", "Italian", "Italiano", Language.English)
+		},
+		{
+			Language.Portuguese,
+			new LanguageDescription("pr", "Portuguese", "Português", Language.English)
+		},
+		{
+			Language.Dutch,
+			new LanguageDescription("nl", "Dutch", "Nederlands", Language.English)
+		},
+		{
+			Language.Polish,
+			new LanguageDescription("pl", "Polish", "Polski", Language.English)
+		},
+		{
+			Language.Swedish,
+			new LanguageDescription("sv", "Swedish", "Svenska", Language.English)
+		},
+		{
+			Language.Norwegian,
+			new LanguageDescription("no", "Norwegian", "Norsk", Language.English)	
+		},
+		{
+			Language.Danish,
+			new LanguageDescription("da", "Danish", "Dansk", Language.English)
+		},
+		{
+			Language.Czech,
+			new LanguageDescription("sc", "Czech", "Čeština", Language.English)
+		},
+		{
+			Language.Japanese,
+			new LanguageDescription("ja", "Japanese", "日本語", Language.English)
+		},
+		{
+			Language.Korean,
+			new LanguageDescription("ko", "Korean", "한국어", Language.English)
+		},
+		{
+			Language.Thai,
+			new LanguageDescription("th", "Thai", "ภาษาไทย", Language.English)
+		}
 	};
 	
 	static readonly IDictionary<string, Language> CodeDict = new Dictionary<string, Language>();
