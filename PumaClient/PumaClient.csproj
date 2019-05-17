@@ -57,6 +57,7 @@
   <ItemGroup>
     <Compile Include="ClientEntityExtensions.cs" />
     <Compile Include="ClientEventDispatcher.cs" />
+    <Compile Include="EntityDecor.cs" />
     <Compile Include="Event\ClientMapStartEvent.cs" />
     <Compile Include="Event\Game\EntityDamageSubEvent.cs" />
     <Compile Include="Event\Game\GameEvent.cs" />

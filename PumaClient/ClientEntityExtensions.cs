@@ -20,7 +20,7 @@ using CitizenFX.Core.Native;
 
 namespace PumaFramework.Client {
 
-public static class ClientEntityExtensions
+public static class ToPlayerExtensions
 {
 	/// <summary>
 	/// Convert <seealso cref="Entity"/> to <seealso cref="Player"/>.
@@ -38,6 +38,17 @@ public static class ClientEntityExtensions
 	/// <returns>true if converted successfully; otherwise, false.</returns>
 	public static bool TryToPlayer(this Entity entity, out Player player)
 		=> (player = entity.ToPlayer()) != null;
+}
+
+public static class EntityDecorExtensions
+{
+
+	public static bool HasDecor(this Entity entity, string propertyName) => EntityDecor.Has(entity, propertyName);
+
+	public static void SetDecor<T>(this Entity entity, string propertyName, T value) where T : struct => EntityDecor.Set(entity, propertyName, value);
+
+	public static T GetDecor<T>(this Entity entity, string propertyName) where T : struct => EntityDecor.Get<T>(entity, propertyName);
+
 }
 
 }
