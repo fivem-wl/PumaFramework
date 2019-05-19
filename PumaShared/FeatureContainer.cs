@@ -25,6 +25,10 @@ using PumaFramework.Shared.Event;
 
 namespace PumaFramework.Shared {
 
+#if SERVER
+[ChildComponent(typeof(PumaPlayerLifecycleManager))]
+#elif CLIENT
+#endif
 public sealed class FeatureContainer : PumaComponent
 {
 	public readonly PumaScript PumaScript;
