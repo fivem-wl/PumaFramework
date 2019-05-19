@@ -17,18 +17,22 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
+using CitizenFX.Core;
 using PumaFramework.Core.Event;
 using PumaFramework.Server.Event;
 using PumaFramework.Shared;
+
+using static PumaFramework.Core.Container.ComponentExtensions;
 
 namespace PumaFramework.Server {
 
 public class PlayerLifecycleManager : PumaComponent
 {
 	readonly ISet<Type> _componentTypes = new HashSet<Type>();
-
-
+	
+	
 	protected override void Start()
 	{
 		foreach (var attr in Parent.GetType().GetCustomAttributes<PlayerLifecycleComponentAttribute>())
@@ -44,7 +48,21 @@ public class PlayerLifecycleManager : PumaComponent
 			Parent.RemoveComponents(type);
 		}
 	}
-	
+
+	public void Add(Type type)
+	{
+		var playerList = this.Get<PlayerList>();
+		foreach (var player in playerList.Where(p => p.IsJoined()))
+		{
+			Parent.AddComponent(type, player);
+		}
+	}
+
+	public bool Remove(Type type)
+	{
+		return Parent.RemoveComponents(type);
+	}
+
 	[PumaEventHandler(HandlerPriority.Monitor)]
 	void OnPlayerJoining(PlayerJoiningEvent @event)
 	{
