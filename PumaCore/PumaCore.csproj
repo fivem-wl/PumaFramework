@@ -49,6 +49,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssertException.cs" />
+    <Compile Include="Event\EventSourceAttribute.cs" />
     <Compile Include="Trace.cs" />
     <Compile Include="Container\ChildComponentAttribute.cs" />
     <Compile Include="Container\CompoundKeyUtils.cs" />

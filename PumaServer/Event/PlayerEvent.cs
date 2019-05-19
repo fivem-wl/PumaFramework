@@ -16,11 +16,13 @@
  */
 
 using CitizenFX.Core;
+using PumaFramework.Core.Event;
 
 namespace PumaFramework.Server.Event {
 
 public abstract class PlayerEvent : Core.Event.Event
 {
+	[EventSource]
 	public readonly Player Player;
 	
 	

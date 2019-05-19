@@ -19,6 +19,7 @@ using System;
 
 namespace PumaFramework.Core.Event {
 
+[AttributeUsage(AttributeTargets.Method)]
 public class PumaEventHandlerAttribute : Attribute
 {
 	public readonly HandlerPriority Priority;
