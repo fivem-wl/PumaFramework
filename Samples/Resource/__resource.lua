@@ -14,4 +14,5 @@ files {
 	'PumaClient.dll',
 	'System.ValueTuple.dll',
 	'Microsoft.Experimental.Collections.dll',
+	'YamlDotNet.dll',
 }
