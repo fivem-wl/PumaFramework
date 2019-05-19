@@ -57,7 +57,7 @@ public static class ComponentExtensions
 	
 	#region Component
 	
-	public static T AddComponent<T>(this Component component, object key = null, IEnumerable<Type> bindTo = null) where T : Component, new() =>
+	public static T AddComponent<T>(this Component component, object key = null, IEnumerable<Type> bindTo = null) where T : Component =>
 		component.AddComponent(typeof(T), key, bindTo) as T;
 
 	public static bool RemoveComponent<T>(this Component component, object key = null) where T : Component =>

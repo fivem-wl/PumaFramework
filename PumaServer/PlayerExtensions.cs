@@ -36,6 +36,11 @@ public static class PlayerExtensions
 		return serverId;
 	}
 
+	public static bool IsJoined(this Player player)
+	{
+		return player.GetServerId() < 0xFFFF;
+	}
+
 	/// <summary>
 	/// Get Player RGSC License
 	/// </summary>
