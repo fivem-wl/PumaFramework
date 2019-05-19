@@ -17,12 +17,14 @@
 
 using CitizenFX.Core;
 using PumaFramework.Core.Container;
+using PumaFramework.Core.Event;
 
 namespace PumaFramework.Server {
 
 [Required(typeof(PlayerLifecycleManager))]
 public class PlayerLifecycleComponent : Component
 {
+	[EventSource]
 	public readonly Player Player;
 
 	

@@ -17,6 +17,7 @@
 
 using System;
 using System.Threading;
+using PumaFramework.Core.Container;
 
 namespace PumaFramework.Core.Event {
 
@@ -28,14 +29,16 @@ class EventHandler : IComparable<EventHandler>
 	internal readonly long Id;
 	internal readonly HandlerPriority Priority;
 	internal readonly Type EventType;
+	internal readonly object Source;
 	internal readonly Action<Event> Handler;
 
 
-	public EventHandler(Type eventType, HandlerPriority priority, Action<Event> handler)
+	public EventHandler(Type eventType, object source, HandlerPriority priority, Action<Event> handler)
 	{
 		Id = Interlocked.Increment(ref _count);
 		Priority = priority;
 		EventType = eventType;
+		Source = source;
 		Handler = handler;
 	}
 

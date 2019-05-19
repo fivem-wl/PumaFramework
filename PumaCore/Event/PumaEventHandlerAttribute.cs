@@ -23,6 +23,7 @@ namespace PumaFramework.Core.Event {
 public class PumaEventHandlerAttribute : Attribute
 {
 	public readonly HandlerPriority Priority;
+	public bool BindSource = false;
 
 
 	public PumaEventHandlerAttribute()

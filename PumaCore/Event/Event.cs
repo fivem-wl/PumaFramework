@@ -15,11 +15,32 @@
  * along with PumaFramework.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
+
 namespace PumaFramework.Core.Event {
 
 public abstract class Event
 {
-	
+	static readonly IDictionary<Type, FieldInfo> CachedSourceFields = new Dictionary<Type, FieldInfo>();
+
+
+	public object GetSource()
+	{
+		var thisType = GetType();
+		if (!CachedSourceFields.TryGetValue(thisType, out var field))
+		{
+			field = thisType.GetRuntimeFields()
+				.Where(f => !f.IsStatic && f.IsInitOnly)
+				.SingleOrDefault(f => f.GetCustomAttribute<EventSourceAttribute>() != null);
+			
+			CachedSourceFields[thisType] = field;
+		}
+
+		return (field == null) ? null : field.GetValue(this);
+	}
 }
 
 }

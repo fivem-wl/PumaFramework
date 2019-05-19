@@ -66,6 +66,7 @@
     <Compile Include="PlayerLifecycleComponentAttribute.cs" />
     <Compile Include="PlayerLifecycleManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="PumaPlayerLifecycleManager.cs" />
     <Compile Include="ServerEventDispatcher.cs" />
   </ItemGroup>
   <ItemGroup>
