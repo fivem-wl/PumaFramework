@@ -54,12 +54,12 @@ public class LanguageService : ILanguageService
 
 	public string Format(string path, params object[] args)
 	{
-		var str = _localizedStringSet.Get(path);
-		if (!path.Equals(str)) return string.Format(str, args);
+		var str = _localizedStringSet.Format(path, args);
+		if (!path.Equals(str)) return str;
 		foreach (var fallbackStringSet in _fallbackStringSets)
 		{
-			str = fallbackStringSet.Get(path);
-			if (!path.Equals(str)) return string.Format(str, args);
+			str = fallbackStringSet.Format(path, args);
+			if (!path.Equals(str)) return str;
 		}
 
 		// return #+path+# if both are empty
