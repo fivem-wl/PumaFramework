@@ -17,13 +17,14 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 
 namespace PumaFramework.Core {
 
 public static class TypeExtensions
 {
-	public static MethodInfo[] GetMethodsEx(this Type type, BindingFlags bindingFlags)
+	public static IEnumerable<MethodInfo> GetMethodsEx(this Type type, BindingFlags bindingFlags)
 	{
 		if (!bindingFlags.HasFlag(BindingFlags.NonPublic)) return type.GetMethods(bindingFlags);
 		
@@ -33,6 +34,18 @@ public static class TypeExtensions
 			methods.AddRange(type.GetMethods(bindingFlags | BindingFlags.DeclaredOnly));
 		}
 		return methods.ToArray();
+	}
+	
+	public static IEnumerable<FieldInfo> GetFieldsEx(this Type type, BindingFlags bindingFlags)
+	{
+		if (!bindingFlags.HasFlag(BindingFlags.NonPublic)) return type.GetFields(bindingFlags);
+		
+		var fields = new List<FieldInfo>();
+		for (; type.BaseType != null; type = type.BaseType)
+		{
+			fields.AddRange(type.GetFields(bindingFlags | BindingFlags.DeclaredOnly));
+		}
+		return fields.ToArray();
 	}
 	
 	public static T New<T>(params object[] args) where T : class
