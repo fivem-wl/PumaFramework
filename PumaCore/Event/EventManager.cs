@@ -25,13 +25,13 @@ namespace PumaFramework.Core.Event {
 
 public class EventManager
 {
-	public static object GetEventSource(object obj)
+	static object GetEventSource(object eventHandlerObject)
 	{
-		var field = obj.GetType().GetRuntimeFields()
+		var field = eventHandlerObject.GetType().GetFieldsEx(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)
 			.Where(f => !f.IsStatic)
 			.Where(f => f.IsInitOnly)
 			.SingleOrDefault(f => f.GetCustomAttribute<EventSourceAttribute>() != null);
-		return (field == null) ? null : field.GetValue(obj);
+		return (field == null) ? null : field.GetValue(eventHandlerObject);
 	}
 	
 	
