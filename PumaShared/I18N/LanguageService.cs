@@ -29,41 +29,40 @@ public class LanguageService : ILanguageService
 
 	readonly List<LocalizedStringSet> _fallbackStringSets;
 
-	#if CLIENT
-	public LanguageService(string feature)
+	public LanguageService(string feature, Language language)
 	{
-		_localizedStringSet = new LocalizedStringSet(feature, _gameLanguageIdDict[API.GetCurrentLanguageId()]);
-		var fallbacks = LanguageDescription.Get(_gameLanguageIdDict[API.GetCurrentLanguageId()]).Fallbacks;
+		_localizedStringSet = new LocalizedStringSet(feature, language);
+		var fallbacks = LanguageDescription.Get(language).Fallbacks;
 		_fallbackStringSets = fallbacks.Select(fallback => new LocalizedStringSet(feature, fallback)).ToList();
+	}
+	
+	#if CLIENT
+	public Language GetCurrentGameLanguage()
+	{
+		return _gameLanguageIdDict[API.GetCurrentLanguageId()];
 	}
 	#endif
 	
 	public string Get(string path)
 	{
 		var str = _localizedStringSet.Get(path);
-		if (!path.Equals(str)) return str;
 		foreach (var fallbackStringSet in _fallbackStringSets)
 		{
-			str = fallbackStringSet.Get(path);
-			if (!path.Equals(str)) return str;
+			if (fallbackStringSet.Get(path) != str) return fallbackStringSet.Get(path);
 		}
 
-		// return #+path+# if both are empty
-		return $"#{str}#";
+		return str;
 	}
 
 	public string Format(string path, params object[] args)
 	{
 		var str = _localizedStringSet.Format(path, args);
-		if (!path.Equals(str)) return str;
 		foreach (var fallbackStringSet in _fallbackStringSets)
 		{
-			str = fallbackStringSet.Format(path, args);
-			if (!path.Equals(str)) return str;
+			if (fallbackStringSet.Format(path, args) != str) return fallbackStringSet.Format(path, args);
 		}
 
-		// return #+path+# if both are empty
-		return $"#{str}#";
+		return str;
 	}
 }
 
