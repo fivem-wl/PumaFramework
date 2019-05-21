@@ -29,19 +29,16 @@ public class LanguageService : ILanguageService
 
 	readonly List<LocalizedStringSet> _fallbackStringSets;
 
-	public LanguageService(string feature, Language language)
+	public LanguageService(string feature, Language language = Language.English )
 	{
+		#if CLIENT
+		language = _gameLanguageIdDict[API.GetCurrentLanguageId()];
+		#endif
 		_localizedStringSet = new LocalizedStringSet(feature, language);
 		var fallbacks = LanguageDescription.Get(language).Fallbacks;
 		_fallbackStringSets = fallbacks.Select(fallback => new LocalizedStringSet(feature, fallback)).ToList();
 	}
 	
-	#if CLIENT
-	public Language GetCurrentGameLanguage()
-	{
-		return _gameLanguageIdDict[API.GetCurrentLanguageId()];
-	}
-	#endif
 	
 	public string Get(string path)
 	{
