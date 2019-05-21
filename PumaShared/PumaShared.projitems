@@ -15,8 +15,10 @@
     <Compile Include="$(MSBuildThisFileDirectory)Event\ResourceEvent.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Event\ResourceStartEvent.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Event\ResourceStopEvent.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)I18N\ILanguageService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)I18N\Language.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)I18N\LanguageDescription.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)I18N\LanguageService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)I18N\LocalizedStringSet.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)PumaComponent.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)PumaScript.cs" />
